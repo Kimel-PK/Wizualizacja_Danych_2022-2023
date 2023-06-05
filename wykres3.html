@@ -23,6 +23,7 @@
 					<h2>Spis treści</h2>
 					<ul>
 						<!-- FIXME menu -->
+						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
 						<li><a href="wykres2.html">Długość trwania związku</a></li>
@@ -30,13 +31,18 @@
 						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
-						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
+						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
+						<li><a href="wykres17.html">Płacenie za pierwszą randkę</a></li>
+						<li><a href="wykres18.html">Stały związek</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -131,14 +137,17 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
 							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.all)
 							chart.update()
 						}
 						function distant () {
+							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
 							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.distant)
 							chart.update()
 						}
 						function close () {
+							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
 							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.close)
 							chart.update()
 						}
@@ -152,7 +161,7 @@
 			</div>
 		</div>
 		<footer>
-			<p>Copyright</p>
+			<p>Aleksander Kotarski, Paweł Król, Piotr Książek, Tomasz Rączkowski</p>
 		</footer>
 	</body>
 </html>
