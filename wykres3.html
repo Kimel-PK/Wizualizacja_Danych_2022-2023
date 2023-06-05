@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych, a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html" class="nav-active">Najczęstsze powody zerwania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="chart-title">Najczęstsze powody zerwania</h2>
+					<div class="chart-small">
+						<canvas class="chart-js" id="myChart"></canvas>
+					</div>
+					<div class="actions-bar">
+						<button id="all">Pokaż wszystko</button>
+						<button id="distant">Związki na odległość</button>
+						<button id="close">Związki nie na odległość</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<!-- TODO -->
+						<div class="col-6">
+							<a class="button button" href="wykres2.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres4.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						let break_up_dictionary = []
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].rozstanie == '')
+								continue
+							
+							let reasons = data[i].rozstanie.split(", ")
+							if (data[i].zw_odległość == 'tak') {
+								for (let j = 0; j < reasons.length; j++) {
+									if (reasons[j] in break_up_dictionary) {
+										break_up_dictionary[reasons[j]].all++
+										break_up_dictionary[reasons[j]].distant++
+									} else {
+										break_up_dictionary[reasons[j]] = {
+											all: 1,
+											distant: 1,
+											close: 0
+										}
+									}
+								}
+							} else {
+								for (let j = 0; j < reasons.length; j++) {
+									if (reasons[j] in break_up_dictionary) {
+										break_up_dictionary[reasons[j]].all++
+										break_up_dictionary[reasons[j]].close++
+									} else {
+										break_up_dictionary[reasons[j]] = {
+											all: 1,
+											distant: 0,
+											close: 1
+										}
+									}
+								}
+							}
+						}
+						
+						console.log (Object.values(break_up_dictionary))
+						
+						// tworzenie wykresu
+						var ctx = document.getElementById('myChart').getContext('2d');
+						var chart = new Chart(ctx, {
+							type: 'polarArea',
+							data: {
+								labels: Object.keys(break_up_dictionary),
+								datasets: [{
+									data: Object.values(break_up_dictionary).map(a => a.all),
+									backgroundColor: [
+										'rgba(255, 99, 132, 0.4)',
+										'rgba(75, 192, 192, 0.4)',
+										'rgba(255, 205, 86, 0.4)',
+										'rgba(201, 203, 207, 0.4)',
+										'rgba(54, 162, 235, 0.4)'
+									]}
+								]
+							},
+							options: {
+								responsive: true,
+								plugins: {
+									legend: {
+										position: 'top',
+									}
+								}
+							},
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.all)
+							chart.update()
+						}
+						function distant () {
+							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.distant)
+							chart.update()
+						}
+						function close () {
+							chart.data.datasets[0].data = Object.values(break_up_dictionary).map(a => a.close)
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("distant").addEventListener("click", distant);
+						document.getElementById("close").addEventListener("click", close);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Copyright</p>
+		</footer>
+	</body>
+</html>

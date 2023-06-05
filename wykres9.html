@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych, a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html" class="nav-active">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="chart-title">Sexting</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<div class="actions-bar">
+						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="science">Pokaż tylko studia ścisłe</button>
+						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<!-- TODO -->
+						<div class="col-6">
+							<a class="button button" href="wykres7.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres9.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						
+						let sexting = {
+							all_man_yes: 0,
+							all_woman_yes: 0,
+							all_other_yes: 0,
+							all_man_no: 0,
+							all_woman_no: 0,
+							all_other_no: 0,
+							science_man_yes: 0,
+							science_woman_yes: 0,
+							science_other_yes: 0,
+							science_man_no: 0,
+							science_woman_no: 0,
+							science_other_no: 0,
+							humanities_man_yes: 0,
+							humanities_woman_yes: 0,
+							humanities_other_yes: 0,
+							humanities_man_no: 0,
+							humanities_woman_no: 0,
+							humanities_other_no: 0
+						}
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].sexting == "tak") {
+								if (data[i].płeć == "m") {
+									sexting.all_man_yes++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_man_yes++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_man_yes++
+								} else if (data[i].płeć == "k") {
+									sexting.all_woman_yes++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_woman_yes++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_woman_yes++
+								} else {
+									sexting.all_other_yes++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_other_yes++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_other_yes++
+								}
+							} else if (data[i].sexting == "nie") {
+								if (data[i].płeć == "m") {
+									sexting.all_man_no++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_man_no++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_man_no++
+								} else if (data[i].płeć == "k") {
+									sexting.all_woman_no++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_woman_no++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_woman_no++
+								} else {
+									sexting.all_other_no++
+									if (data[i].studia == "humanistyczne")
+										sexting.humanities_other_no++
+									else if (data[i].studia == "ścisłe")
+										sexting.science_other_no++
+								}
+							}
+						}
+						
+						console.log (sexting)
+						
+						// tworzenie wykresu
+						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
+							type: 'bar',
+							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszyscy studenci'
+									}
+								},
+								scales: {
+									y: {
+										beginAtZero: true,
+										max: 35
+									}
+								}
+							},
+							data: {
+								labels: ["Liczba osób deklarująca podejmowanie sextingu", "Liczba osób deklarująca, niepodejmowanie sextingu"],
+								datasets: [{
+									label: "Liczba mężczyzn",
+									data: [sexting.all_man_yes, sexting.all_man_no],
+									backgroundColor: [
+										'rgba(255, 0, 0, 0.4)'
+									],
+								},
+								{
+									label: "Liczba kobiet",
+									data: [sexting.all_woman_yes, sexting.all_woman_no],
+									backgroundColor: [
+										'rgba(0, 0, 255, 0.4)'
+									],
+								},
+								{
+									label: "Liczba osób",
+									data: [sexting.all_other_yes, sexting.all_other_no],
+									backgroundColor: [
+										'rgba(0, 255, 0, 0.4)'
+									],
+								}]
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							chart.options.plugins.title.text = 'Wszyscy studenci'
+							chart.data.datasets[0].data = [sexting.all_man_yes, sexting.all_man_no]
+							chart.data.datasets[1].data = [sexting.all_woman_yes, sexting.all_woman_no]
+							chart.data.datasets[2].data = [sexting.all_other_yes, sexting.all_other_no]
+							chart.update()
+						}
+						function science () {
+							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.data.datasets[0].data = [sexting.science_man_yes, sexting.science_man_no]
+							chart.data.datasets[1].data = [sexting.science_woman_yes, sexting.science_woman_no]
+							chart.data.datasets[2].data = [sexting.science_other_yes, sexting.science_other_no]
+							chart.update()
+						}
+						function humanities () {
+							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.data.datasets[0].data = [sexting.humanities_man_yes, sexting.humanities_man_no]
+							chart.data.datasets[1].data = [sexting.humanities_woman_yes, sexting.humanities_woman_no]
+							chart.data.datasets[2].data = [sexting.humanities_other_yes, sexting.humanities_other_no]
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("science").addEventListener("click", science);
+						document.getElementById("humanities").addEventListener("click", humanities);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Copyright</p>
+		</footer>
+	</body>
+</html>

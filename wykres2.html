@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych, a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html" class="nav-active">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="chart-title">Długość trwania w związku, a kierunek studiów</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<div class="actions-bar">
+						<button id="all">Pokaż wszystko</button>
+						<button id="now">Pokaż tylko trwające związki</button>
+						<button id="past">Pokaż tylko przeszłe związki</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<!-- TODO -->
+						<div class="col-6">
+							<a class="button button" href="wykres1.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres3.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						let now_pairs = []
+						let past_pairs = []
+						let fields_of_study = []
+						let all_avg = []
+						let now_avg = []
+						let now_avg_count = []
+						let past_avg = []
+						let past_avg_count = []
+						
+						for (let i = 0; i < data.length; i++) {
+							if (!fields_of_study.includes (data[i].kierunek)) {
+								fields_of_study.push (data[i].kierunek)
+								now_avg.push ([data[i].kierunek, 0])
+								past_avg.push ([data[i].kierunek, 0])
+								now_avg_count.push (0)
+								past_avg_count.push (0)
+							}
+							if (data[i].ile_trwa != null) {
+								now_pairs.push ([data[i].kierunek, data[i].ile_trwa])
+								now_avg[fields_of_study.indexOf(data[i].kierunek)][1] += parseFloat (data[i].ile_trwa)
+								now_avg_count[fields_of_study.indexOf(data[i].kierunek)] += 1
+							} else if (data[i].ile_trwał != null) {
+								past_pairs.push ([data[i].kierunek, data[i].ile_trwał])
+								past_avg[fields_of_study.indexOf(data[i].kierunek)][1] += parseFloat (data[i].ile_trwał)
+								past_avg_count[fields_of_study.indexOf(data[i].kierunek)] += 1
+							}
+						}
+						
+						for (let i = 0; i < fields_of_study.length; i++) {
+							if (now_avg_count[i] != 0)
+								now_avg[i][1] /= now_avg_count[i]
+							if (past_avg_count[i] != 0)
+								past_avg[i][1] /= past_avg_count[i]
+							
+							if (now_avg[i][1] == 0)
+								all_avg.push ([fields_of_study[i], past_avg[i][1]])
+							else if (past_avg[i][1] == 0)
+								all_avg.push ([fields_of_study[i], now_avg[i][1]])
+							else
+								all_avg.push ([fields_of_study[i], (now_avg[i][1] + past_avg[i][1]) / 2])
+						}
+						
+						console.log (now_pairs)
+						console.log (past_pairs)
+						console.log (now_avg)
+						console.log (now_avg_count)
+						console.log (past_avg)
+						console.log (past_avg_count)
+						
+						// tworzenie wykresu
+						var ctx = document.getElementById('myChart').getContext('2d');
+						var chart = new Chart(ctx, {
+							type: 'scatter',
+							data: {
+								datasets: [{
+									label: 'Czas trwania związku (w miesiącach)',
+									data: now_pairs.concat (past_pairs),
+									backgroundColor: '#00800033',
+									borderColor: '#008000ff',
+									borderWidth: 1
+								},
+								{
+									label: 'Średni czas trwania związku (w miesiącach)',
+									data: all_avg,
+									backgroundColor: '#80000033',
+									borderColor: '#800000ff',
+									borderWidth: 1,
+									pointRadius: 10
+								}]
+							},
+							options: {
+								scales: {
+									x: {
+										type: 'category',
+										labels: fields_of_study
+									}
+								}
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							chart.data.datasets[0].label = 'Czas trwania związku (w miesiącach)',
+							chart.data.datasets[0].data = now_pairs.concat (past_pairs)
+							chart.data.datasets[1].data = all_avg
+							chart.data.datasets[0].data
+							chart.update()
+						}
+						function now () {
+							chart.data.datasets[0].label = 'Czas trwania obecnego związku (w miesiącach)',
+							chart.data.datasets[0].data = now_pairs
+							chart.data.datasets[1].data = now_avg
+							chart.update()
+						}
+						function past () {
+							chart.data.datasets[0].label = 'Czas trwania przeszłego związku (w miesiącach)',
+							chart.data.datasets[0].data = past_pairs
+							chart.data.datasets[1].data = past_avg
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("now").addEventListener("click", now);
+						document.getElementById("past").addEventListener("click", past);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Copyright</p>
+		</footer>
+	</body>
+</html>

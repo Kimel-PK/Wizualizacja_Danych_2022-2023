@@ -1,0 +1,171 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--main-color: #912cee;
+	--main-text-color: white;
+	--secondary-color: #571a8e;
+	--secondary-text-color: white;
+	--secondary-hover-color: #2b0d47;
+	--background-color: white;
+	--body-background-color: #d8d8d8;
+}
+
+body {
+	background-color: var(--body-background-color) !important;
+}
+
+h2 {
+	margin-bottom: 1em !important;
+}
+
+a.button {
+	background-color: var(--secondary-color);
+	color: var(--secondary-text-color);
+	padding: 7px 20px;
+	border-radius: 25px;
+	text-decoration: none;
+}
+
+a.button:hover {
+	background-color: var(--secondary-hover-color);
+	color: var(--secondary-text-color);
+	transition: 0.2s;
+}
+
+.text-right {
+	text-align: right;
+}
+
+/* header */
+
+header {
+	background-color: var(--main-color);
+	text-align: center;
+	padding: 20px;
+}
+
+header h1 {
+	color: var(--main-text-color);
+	font-weight: 700;
+}
+
+header p {
+	color: var(--main-text-color);
+}
+
+/* aside */
+
+aside {
+	background-color: var(--secondary-color);
+	padding: 20px !important;
+}
+
+aside h2 {
+	color: var(--secondary-text-color);
+	font-size: 1.7em;
+}
+
+aside ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+aside a {
+	text-decoration: none;
+	color: var(--secondary-text-color);
+	background-color: var(--secondary-color);
+	display: block;
+	padding: 7px 15px;
+	border-radius: 10px;
+}
+
+aside a:hover {
+	color: var(--secondary-text-color);
+	transition: 0.2s;
+	background-color: var(--secondary-hover-color);
+}
+
+.nav-active {
+	background-color: var(--main-color);
+	border-radius: 10px;
+}
+
+/* main */
+
+main {
+	background-color: var(--background-color);
+	padding: 50px !important;
+}
+
+canvas.chart-js {
+	margin-bottom: 30px;
+}
+
+.actions-bar {
+	text-align: center;
+}
+
+button {
+	color: var(--secondary-text-color);
+	padding: 7px 20px;
+	background-color: var(--secondary-color);
+	border-radius: 25px !important;
+	border: none;
+}
+
+button:hover {
+	background-color: var(--secondary-hover-color);
+}
+
+.chart-title {
+	text-align: center;
+}
+
+table {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+  
+table td, table th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+  
+table tr:nth-child(even){
+	background-color: #f2f2f2;
+}
+
+table tr:hover {
+	background-color: #ddd;
+}
+
+table th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: var(--secondary-color);
+	color: white;
+}
+
+.chart-small {
+	width: 60%;
+	margin: auto;
+}
+
+/* footer */
+
+footer {
+	background-color: var(--main-color);
+	text-align: center;
+	padding: 20px;
+}
+
+footer p {
+	margin: 0;
+	color: white;
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html" class="nav-active">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="text-center">Informacje o danych</h2>
+					<table>
+						<tr>
+							<th></th>
+							<th>Ankiety papierowe</th>
+							<th>Ankiety internetowe</th>
+							<th>Łącznie</th>
+						</tr>
+						<tr>
+							<td><p>Liczba zebranych ankiet:</p></td>
+							<td><span id="data-count-offline"></span></td>
+							<td><span id="data-count-online"></span></td>
+							<td><span id="data-count"></span></td>
+						</tr>
+						<tr>
+							<td><p>Liczba mężczyzn:</p></td>
+							<td><span id="men-count-offline"></span> (<span id="men-percent-offline"></span>%)</td>
+							<td><span id="men-count-online"></span> (<span id="men-percent-online"></span>%)</td>
+							<td><span id="men-count"></span> (<span id="men-percent"></span>%)</td>
+						</tr>
+						<tr>
+							<td><p>Liczba kobiet:</p></td>
+							<td><span id="women-count-offline"></span> (<span id="women-percent-offline"></span>%)</td>
+							<td><span id="women-count-online"></span> (<span id="women-percent-online"></span>%)</td>
+							<td><span id="women-count"></span> (<span id="women-percent"></span>%)</td>
+						</tr>
+					</table>
+					<hr>
+					<h2 class="chart-title">Liczba zebranych ankiet ze względu na kierunek studiów</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<div class="actions-bar">
+						<button id="all">Wszystko</button>
+						<button id="offline">Ankiety papierowe</button>
+						<button id="online">Ankiety internetowe</button>
+					</div>
+					<hr>
+					<h2 class="chart-title">Wiek</h2>
+					<canvas class="chart-js" id="myChart2"></canvas>
+					<div class="actions-bar">
+						<button id="all_2">Wszystko</button>
+						<button id="offline_2">Ankiety papierowe</button>
+						<button id="online_2">Ankiety internetowe</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<!-- TODO -->
+						<div class="col-6">
+							<!--<a class="button button" href="">Poprzedni wykres</a>-->
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres1.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						document.getElementById('data-count').innerHTML = data.length
+						let data_count_offline = 0
+						let data_count_online = 0
+						
+						// wykres 1
+						let categories = []
+						
+						// wykres 2
+						let age = []
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].ankieta_internetowa == "tak")
+								data_count_online++
+							else
+								data_count_offline++
+							
+							// wykres 1
+							if (categories[data[i].kierunek] == undefined) {
+								categories[data[i].kierunek] = {
+									men_online_count: 0,
+									women_online_count: 0,
+									men_offline_count: 0,
+									women_offline_count: 0
+								}
+							}
+							
+							if (data[i].płeć == 'm') {
+								if (data[i].ankieta_internetowa == "tak")
+									categories[data[i].kierunek].men_online_count++
+								else
+									categories[data[i].kierunek].men_offline_count++
+							} else if (data[i].płeć == 'k') {
+								if (data[i].ankieta_internetowa == "tak")
+									categories[data[i].kierunek].women_online_count++
+								else
+									categories[data[i].kierunek].women_offline_count++
+							}
+							
+							// wykres 2
+							if (age[data[i].wiek] == undefined) {
+								age[data[i].wiek] = {
+									men_online: 0,
+									men_offline: 0,
+									women_online: 0,
+									women_offline: 0
+								}
+							}
+							if (data[i].płeć == 'm') {
+								if (data[i].ankieta_internetowa == "tak")
+									age[data[i].wiek].men_online++
+								else
+									age[data[i].wiek].men_offline++
+							} else if (data[i].płeć == 'k') {
+								if (data[i].ankieta_internetowa == "tak")
+									age[data[i].wiek].women_online++
+								else
+									age[data[i].wiek].women_offline++
+							}
+						}
+						
+						document.getElementById('data-count-offline').innerHTML = data_count_offline
+						document.getElementById('data-count-online').innerHTML = data_count_online
+						
+						let men_count_offline = Object.keys(categories).reduce((acc, key) => acc + categories[key].men_offline_count, 0)
+						let men_count_online = Object.keys(categories).reduce((acc, key) => acc + categories[key].men_online_count, 0)
+						let women_count_offline = Object.keys(categories).reduce((acc, key) => acc + categories[key].women_offline_count, 0)
+						let women_count_online = Object.keys(categories).reduce((acc, key) => acc + categories[key].women_online_count, 0)
+						
+						document.getElementById('men-count-offline').innerHTML = men_count_offline
+						document.getElementById('men-count-online').innerHTML = men_count_online
+						document.getElementById('men-count').innerHTML = men_count_online + men_count_offline
+						document.getElementById('women-count-offline').innerHTML = women_count_offline
+						document.getElementById('women-count-online').innerHTML = women_count_online
+						document.getElementById('women-count').innerHTML = women_count_offline + women_count_online
+						document.getElementById('men-percent-offline').innerHTML = (men_count_offline / data.length * 100).toFixed(0)
+						document.getElementById('men-percent-online').innerHTML = (men_count_online / data.length * 100).toFixed(0)
+						document.getElementById('men-percent').innerHTML = ((men_count_online + men_count_offline) / data.length * 100).toFixed(0)
+						document.getElementById('women-percent-offline').innerHTML = (women_count_offline / data.length * 100).toFixed(0)
+						document.getElementById('women-percent-online').innerHTML = (women_count_online / data.length * 100).toFixed(0)
+						document.getElementById('women-percent').innerHTML = ((women_count_online + women_count_offline) / data.length * 100).toFixed(0)
+						
+						let category_men_all = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].men_offline_count + categories[key].men_online_count); return acc;}, []);
+						let category_women_all = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].women_offline_count + categories[key].women_online_count); return acc;}, []);
+						let category_men_count_online = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].men_online_count); return acc;}, []);
+						let category_men_count_offline = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].men_offline_count); return acc;}, []);
+						let category_women_count_online = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].women_online_count); return acc;}, []);
+						let category_women_count_offline = Object.keys(categories).reduce(function(acc, key) {acc.push(categories[key].women_offline_count); return acc;}, []);
+						
+						// tworzenie wykresu
+						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
+							type: 'bar',
+							data: {
+								labels: ['Liczba osób'],
+								datasets: [{
+									label: 'Liczba mężczyzn',
+									data: category_men_all,
+									backgroundColor: '#0000ff33',
+									borderColor: '#0000ffff',
+									borderWidth: 1
+								},
+								{
+									label: 'Liczba kobiet',
+									data: category_women_all,
+									backgroundColor: '#ffc0cb33',
+									borderColor: '#ffc0cbff',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								scales: {
+									y: {
+										stacked: true
+									},
+									x: {
+										stacked: true,
+										type: 'category',
+										labels: Object.keys(categories)
+									}
+								}
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							chart.data.datasets[0].data = category_men_all
+							chart.data.datasets[1].data = category_women_all
+							chart.update()
+						}
+						function offline () {
+							chart.data.datasets[0].data = category_men_count_offline
+							chart.data.datasets[1].data = category_women_count_offline
+							chart.update()
+						}
+						function online () {
+							chart.data.datasets[0].data = category_men_count_online
+							chart.data.datasets[1].data = category_women_count_online
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("offline").addEventListener("click", offline);
+						document.getElementById("online").addEventListener("click", online);
+						
+						let men_age_all = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_offline + age[key].men_online); return acc;}, []);
+						let men_age_online = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_online); return acc;}, []);
+						let men_age_offline = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_offline); return acc;}, []);
+						let women_age_all = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_offline + age[key].women_online); return acc;}, []);
+						let women_age_online = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_online); return acc;}, []);
+						let women_age_offline = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_offline); return acc;}, []);
+						
+						// piramida wieku
+						let chart2 = new Chart(document.getElementById('myChart2').getContext('2d'), {
+							type: "bar",
+							data: {
+								labels: Object.keys(age),
+								datasets: [
+									{
+										label: "Liczba mężczyzn",
+										backgroundColor: '#0000ff33',
+										borderColor: '#0000ffff',
+										data: men_age_all,
+									},
+									{
+										label: "Liczba kobiet",
+										backgroundColor: '#ffc0cb33',
+										borderColor: '#ffc0cbff',
+										data: women_age_all.map((k) => -k),
+									},
+								],
+							},
+							options: {
+								indexAxis: 'y',
+								scales: {
+									x: {
+										stacked: false,
+										ticks: {
+											beginAtZero: true
+										},
+										min: -20,
+										max: 20
+									},
+									y: {
+										stacked: true,
+										position: "left",
+										reverse: true
+									}
+								}
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all_2 () {
+							chart2.data.datasets[0].data = men_age_all
+							chart2.data.datasets[1].data = women_age_all.map((k) => -k)
+							chart2.update()
+						}
+						function offline_2 () {
+							chart2.data.datasets[0].data = men_age_offline
+							chart2.data.datasets[1].data = women_age_offline.map((k) => -k)
+							chart2.update()
+						}
+						function online_2 () {
+							chart2.data.datasets[0].data = men_age_online
+							chart2.data.datasets[1].data = women_age_online.map((k) => -k)
+							chart2.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all_2").addEventListener("click", all_2);
+						document.getElementById("offline_2").addEventListener("click", offline_2);
+						document.getElementById("online_2").addEventListener("click", online_2);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Copyright</p>
+		</footer>
+	</body>
+</html>

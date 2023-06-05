@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych, a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
+						<li><a href="wykres4.html" class="nav-active">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera/partnerki?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="chart-title">Kontakty seksualne w podziale na płeć</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<!-- TODO podział na online/offline? -->
+					<hr>
+					<h2 class="chart-title">Kontakty seksualne, a rodzaj ankiety</h2>
+					<canvas class="chart-js" id="myChart2"></canvas>
+					<div class="actions-bar">
+						<button id="all_2">Pokaż wszystkie kierunki studiów</button>
+						<button id="science_2">Pokaż tylko studia ścisłe</button>
+						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<!-- TODO -->
+						<div class="col-6">
+							<a class="button button" href="wykres3.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres5.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						
+						// wykres 1
+						let yes = 0
+						let no = 0
+						let yes_woman = 0
+						let no_woman = 0
+						let yes_man = 0
+						let no_man = 0
+						
+						// wykres 2
+						let sex = {
+							all_online_yes: 0,
+							all_online_no: 0,
+							all_offline_yes: 0,
+							all_offline_no: 0,
+							science_online_yes: 0,
+							science_online_no: 0,
+							science_offline_yes: 0,
+							science_offline_no: 0,
+							humanities_online_yes: 0,
+							humanities_online_no: 0,
+							humanities_offline_yes: 0,
+							humanities_offline_no: 0,
+						}
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].seks == "tak") {
+								// wykres 1
+								yes++
+								if (data[i].płeć == "m")
+									yes_man++
+								else
+									yes_woman++
+								
+								// wykres 2
+								if (data[i].ankieta_internetowa == "tak") {
+									sex.all_online_yes++
+									if (data[i].studia == "humanistyczne")
+										sex.humanities_online++
+									else if (data[i].studia == "ścisłe")
+										sex.science_online++
+								} else {
+									sex.all_offline_yes++
+									if (data[i].studia == "humanistyczne")
+										sex.humanities_offline_yes++
+									else if (data[i].studia == "ścisłe")
+										sex.science_offline_yes++
+								}
+							} else {
+								// wykres 1
+								no++
+								if (data[i].płeć == "m")
+									no_man++
+								else
+									no_woman++
+								
+								// wykres 2
+								if (data[i].ankieta_internetowa == "tak") {
+									sex.all_online_no++
+									if (data[i].studia == "humanistyczne")
+										sex.humanities_online_no++
+									else if (data[i].studia == "ścisłe")
+										sex.science_online_no++
+								} else {
+									sex.all_offline_no++
+									if (data[i].studia == "humanistyczne")
+										sex.humanities_offline_no++
+									else if (data[i].studia == "ścisłe")
+										sex.science_offline_no++
+								}
+							}
+						}
+						
+						// tworzenie wykresu
+						var ctx = document.getElementById('myChart').getContext('2d');
+						var myChart = new Chart(ctx, {
+							type: 'bar',
+							data: {
+								labels: ['Deklaruje, że uprawiał/a seks', 'Deklaruje, że nie uprawiał/a seksu'],
+								datasets: [{
+									label: 'Liczba mężczyzn',
+									data: [yes_man, no_man],
+									backgroundColor: '#0000ff33',
+									borderColor: '#0000ffff',
+									borderWidth: 1
+								},
+								{
+									label: 'Liczba kobiet',
+									data: [yes_woman, no_woman],
+									backgroundColor: '#ffc0cb33',
+									borderColor: '#ffc0cbff',
+									borderWidth: 1
+								}]
+							},
+							options: {
+								scales: {
+									y: {
+										beginAtZero: true,
+										max: 80
+									}
+								}
+							}
+						});
+						
+						// wykres 2
+						
+						// tworzenie wykresu
+						var chart2 = new Chart(document.getElementById('myChart2').getContext('2d'), {
+							type: 'bar',
+							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszyscy studenci'
+									}
+								}
+							},
+							data: {
+								labels: ["Liczba osób deklarująca, że uprawiała seks", "Liczba osób deklarująca, że nie uprawiała seksu"],
+								datasets: [{
+									label: "Liczba osób, ankiety online",
+									data: [sex.all_online_yes, sex.all_online_no],
+									backgroundColor: [
+										'rgba(255, 0, 0, 0.4)'
+									],
+								},
+								{
+									label: "Liczba osób, ankiety offline",
+									data: [sex.all_offline_yes, sex.all_offline_no],
+									backgroundColor: [
+										'rgba(0, 0, 255, 0.4)'
+									],
+								}]
+							},
+							options: {
+								scales: {
+									y: {
+										beginAtZero: true,
+										max: 80
+									}
+								}
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy studenci'
+							chart2.data.datasets[0].data = [sex.all_online_yes, sex.all_online_no],
+							chart2.data.datasets[1].data = [sex.all_offline_yes, sex.all_offline_no],
+							chart2.update()
+						}
+						function science_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart2.data.datasets[0].data = [sex.science_online_yes, sex.science_online_no],
+							chart2.data.datasets[1].data = [sex.science_offline_yes, sex.science_offline_no],
+							chart2.update()
+						}
+						function humanities_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart2.data.datasets[0].data = [sex.humanities_online_yes, sex.humanities_online_no],
+							chart2.data.datasets[1].data = [sex.humanities_offline_yes, sex.humanities_offline_no],
+							chart2.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all_2").addEventListener("click", all_2);
+						document.getElementById("science_2").addEventListener("click", science_2);
+						document.getElementById("humanities_2").addEventListener("click", humanities_2);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Copyright</p>
+		</footer>
+	</body>
+</html>
