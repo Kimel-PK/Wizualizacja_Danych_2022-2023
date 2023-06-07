@@ -40,20 +40,19 @@
 						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
 						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Płacenie za pierwszą randkę</a></li>
-						<li><a href="wykres18.html">Stały związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Presja ze strony czasu skraca związki</h2>
-					<!-- 1 wykres - scatterplot (heatmapa) jak wygląda długość związków w zależności od tego jak ktoś odpowiedział na pytanie o presję -->
+					<!-- 1 wykres -->
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
 						<button id="all">Pokaż wszystkie kierunki studiów</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
-					<!-- TODO 2 wykres - prawdopodobnie słupkowy, osoby które chcą stałego związku jakoś ze względu na to jak odpowiedziały na pytanie o presji -->
+					<!-- 2 wykres -->
 					<h2 class="chart-title">Presja ze strony czasu skraca związki</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
@@ -167,7 +166,6 @@
 						console.log (pressure_vs_length)
 						
 						// tworzenie wykresu
-						// TODO wystylować kółka
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'bubble',
 							options: {
@@ -185,6 +183,13 @@
 									x: {
 										type: 'category',
 										labels: ["", label_yes, label_no, ""]
+									}
+								},
+								elements: {
+									point: {
+										borderWidth: 8,
+										borderColor: 'rgba(255, 0, 0.4)',
+										hoverBorderWidth: 16
 									}
 								}
 							},
@@ -220,6 +225,139 @@
 						document.getElementById("all").addEventListener("click", all);
 						document.getElementById("science").addEventListener("click", science);
 						document.getElementById("humanities").addEventListener("click", humanities);
+						
+						// wykres 2
+						
+						let pressure_vs_long_term = {
+							all: {
+								long_term_pressure: 0,
+								long_term_no_pressure: 0,
+								short_term_pressure: 0,
+								short_term_no_pressure: 0
+							},
+							science: {
+								long_term_pressure: 0,
+								long_term_no_pressure: 0,
+								short_term_pressure: 0,
+								short_term_no_pressure: 0
+							},
+							humanities: {
+								long_term_pressure: 0,
+								long_term_no_pressure: 0,
+								short_term_pressure: 0,
+								short_term_no_pressure: 0
+							}
+						}
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].studia == "humanistyczne") {
+								if (data[i].partner_ka_na_stałe == "tak") {
+									if (data[i].presja_równa_się_krótko == "tak") {
+										pressure_vs_long_term.all.long_term_pressure++
+										pressure_vs_long_term.humanities.long_term_pressure++
+									} else if (data[i].presja_równa_się_krótko == "nie") {
+										pressure_vs_long_term.all.long_term_no_pressure++
+										pressure_vs_long_term.humanities.long_term_no_pressure++
+									}
+								} else if (data[i].partner_ka_na_stałe == "nie") {
+									if (data[i].presja_równa_się_krótko == "tak") {
+										pressure_vs_long_term.all.short_term_pressure++
+										pressure_vs_long_term.humanities.short_term_pressure++
+									} else if (data[i].presja_równa_się_krótko == "nie") {
+										pressure_vs_long_term.all.short_term_no_pressure++
+										pressure_vs_long_term.humanities.short_term_no_pressure++
+									}
+								}
+							} else if (data[i].studia = "ścisłe") {
+								if (data[i].partner_ka_na_stałe == "tak") {
+									if (data[i].presja_równa_się_krótko == "tak") {
+										pressure_vs_long_term.all.long_term_pressure++
+										pressure_vs_long_term.science.long_term_pressure++
+									} else if (data[i].presja_równa_się_krótko == "nie") {
+										pressure_vs_long_term.all.long_term_no_pressure++
+										pressure_vs_long_term.science.long_term_no_pressure++
+									}
+								} else if (data[i].partner_ka_na_stałe == "nie") {
+									if (data[i].presja_równa_się_krótko == "tak") {
+										pressure_vs_long_term.all.short_term_pressure++
+										pressure_vs_long_term.science.short_term_pressure++
+									} else if (data[i].presja_równa_się_krótko == "nie") {
+										pressure_vs_long_term.all.short_term_no_pressure++
+										pressure_vs_long_term.science.short_term_no_pressure++
+									}
+								}
+							}
+						}
+						
+						console.log (pressure_vs_length)
+						
+						// tworzenie wykresu
+						var chart2 = new Chart(document.getElementById('myChart2').getContext('2d'), {
+							type: 'bubble',
+							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszyscy studenci'
+									},
+								},
+								scales: {
+									y: {
+										type: 'category',
+										labels: ["", "Uważa, że presja nie prowadzi do krótkich związków", "Uważa, że presja prowadzi do krótkich związków", ""],
+									},
+									x: {
+										type: 'category',
+										labels: ["", "Chce długoterminowego związku", "Nie chce długoterminowego związku", ""],
+									}
+								},
+							},
+							data: {
+								datasets: [{
+									label: "Liczba studentów",
+									data: [
+										["Chce długoterminowego związku", "Uważa, że presja prowadzi do krótkich związków", pressure_vs_long_term.all.long_term_pressure],
+										["Nie chce długoterminowego związku", "Uważa, że presja prowadzi do krótkich związków", pressure_vs_long_term.all.short_term_pressure],
+										["Chce długoterminowego związku", "Uważa, że presja nie prowadzi do krótkich związków", pressure_vs_long_term.all.long_term_no_pressure],
+										["Nie chce długoterminowego związku", "Uważa, że presja nie prowadzi do krótkich związków", pressure_vs_long_term.all.short_term_no_pressure]
+									],
+									backgroundColor: [
+										'rgba(255, 0, 0.4)'
+									],
+								}]
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy studenci'
+							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.all.long_term_pressure
+							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.all.short_term_pressure
+							chart2.data.datasets[0].data[2][2] = pressure_vs_long_term.all.long_term_no_pressure
+							chart2.data.datasets[0].data[3][2] = pressure_vs_long_term.all.short_term_no_pressure
+							chart2.update()
+						}
+						function science_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.science.long_term_pressure
+							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.science.short_term_pressure
+							chart2.data.datasets[0].data[2][2] = pressure_vs_long_term.science.long_term_no_pressure
+							chart2.data.datasets[0].data[3][2] = pressure_vs_long_term.science.short_term_no_pressure
+							chart2.update()
+						}
+						function humanities_2 () {
+							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.humanities.long_term_pressure
+							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.humanities.short_term_pressure
+							chart2.data.datasets[0].data[2][2] = pressure_vs_long_term.humanities.long_term_no_pressure
+							chart2.data.datasets[0].data[3][2] = pressure_vs_long_term.humanities.short_term_no_pressure
+							chart2.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all_2").addEventListener("click", all_2);
+						document.getElementById("science_2").addEventListener("click", science_2);
+						document.getElementById("humanities_2").addEventListener("click", humanities_2);
 					</script>
 				</main>
 			</div>

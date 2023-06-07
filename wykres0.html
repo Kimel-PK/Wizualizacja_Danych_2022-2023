@@ -41,8 +41,7 @@
 						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
 						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Płacenie za pierwszą randkę</a></li>
-						<li><a href="wykres18.html">Stały związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -213,6 +212,12 @@
 								}]
 							},
 							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszystkie ankiety'
+									},
+								},
 								scales: {
 									y: {
 										stacked: true
@@ -228,19 +233,19 @@
 						
 						// funkcje przycisków akcji
 						function all () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart.options.plugins.title.text = 'Wszystkie ankiety'
 							chart.data.datasets[0].data = category_men_all
 							chart.data.datasets[1].data = category_women_all
 							chart.update()
 						}
 						function offline () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart.options.plugins.title.text = 'Ankiety papierowe'
 							chart.data.datasets[0].data = category_men_count_offline
 							chart.data.datasets[1].data = category_women_count_offline
 							chart.update()
 						}
 						function online () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart.options.plugins.title.text = 'Ankiety online'
 							chart.data.datasets[0].data = category_men_count_online
 							chart.data.datasets[1].data = category_women_count_online
 							chart.update()
@@ -279,6 +284,12 @@
 								],
 							},
 							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszystkie ankiety'
+									},
+								},
 								indexAxis: 'y',
 								scales: {
 									x: {
@@ -300,19 +311,19 @@
 						
 						// funkcje przycisków akcji
 						function all_2 () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart2.options.plugins.title.text = 'Wszystkie ankiety'
 							chart2.data.datasets[0].data = men_age_all
 							chart2.data.datasets[1].data = women_age_all.map((k) => -k)
 							chart2.update()
 						}
 						function offline_2 () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart2.options.plugins.title.text = 'Ankiety papierowe'
 							chart2.data.datasets[0].data = men_age_offline
 							chart2.data.datasets[1].data = women_age_offline.map((k) => -k)
 							chart2.update()
 						}
 						function online_2 () {
-							// TODO zmiana tytułu żeby było wiadomo że aktualnie działa jakiś filtr
+							chart2.options.plugins.title.text = 'Ankiety online'
 							chart2.data.datasets[0].data = men_age_online
 							chart2.data.datasets[1].data = women_age_online.map((k) => -k)
 							chart2.update()

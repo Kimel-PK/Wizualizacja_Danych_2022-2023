@@ -1,1 +1,293 @@
-<!-- TODO % randkowanie trudniejsze teraz niż kiedyś [The majority of single Gen Z and Millennials say that dating is harder now than in past generations.] -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="index.html">Wstęp</a></li>
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres15.html" class="nav-active">Trudność znalezienia partnera</a></li>
+						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="text-center">Randkowanie trudniejsze kiedyś niż dziś</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<div class="actions-bar">
+						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="science">Pokaż tylko studia ścisłe</button>
+						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<hr>
+						<button id="all_sex">Pokaż wszystko</button>
+						<button id="men">Pokaż tylko mężczyzn</button>
+						<button id="women">Pokaż tylko kobiety</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<div class="col-6">
+							<a class="button button" href="wykres14.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres16.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						
+						let age = []
+						let choosen_studies = 0
+						let choosen_sex = 0
+						
+						for (let i = 0; i < data.length; i++) {
+							
+							if (age[data[i].wiek] == undefined) {
+								age[data[i].wiek] = {
+									any_sex_all_yes: 0,
+									any_sex_all_no: 0,
+									men_all_yes: 0,
+									men_all_no: 0,
+									women_all_yes: 0,
+									women_all_no: 0,
+									
+									any_sex_science_yes: 0,
+									any_sex_science_no: 0,
+									men_science_yes: 0,
+									men_science_no: 0,
+									women_science_yes: 0,
+									women_science_no: 0,
+									
+									any_sex_humanities_yes: 0,
+									any_sex_humanities_no: 0,
+									men_humanities_yes: 0,
+									men_humanities_no: 0,
+									women_humanities_yes: 0,
+									women_humanities_no: 0,
+								}
+							}
+							
+							if (data[i].płeć == 'm') {
+								if (data[i].studia == "humanistyczne") {
+									if (data[i].kiedyś_łatwiej == "tak") {
+										age[data[i].wiek].any_sex_all_yes++
+										age[data[i].wiek].men_all_yes++
+										age[data[i].wiek].any_sex_humanities_yes++
+										age[data[i].wiek].men_humanities_yes++
+									} else if (data[i].kiedyś_łatwiej == "nie") {
+										age[data[i].wiek].any_sex_all_no++
+										age[data[i].wiek].men_all_no++
+										age[data[i].wiek].any_sex_humanities_no++
+										age[data[i].wiek].men_humanities_no++
+									}
+								} else if (data[i].studia == "ścisłe") {
+									if (data[i].kiedyś_łatwiej == "tak") {
+										age[data[i].wiek].any_sex_all_yes++
+										age[data[i].wiek].men_all_yes++
+										age[data[i].wiek].any_sex_science_yes++
+										age[data[i].wiek].men_science_yes++
+									} else if (data[i].kiedyś_łatwiej == "nie") {
+										age[data[i].wiek].any_sex_all_no++
+										age[data[i].wiek].men_all_no++
+										age[data[i].wiek].any_sex_science_no++
+										age[data[i].wiek].men_science_no++
+									}
+								}
+							} else if (data[i].płeć == 'k') {
+								if (data[i].studia == "humanistyczne") {
+									if (data[i].kiedyś_łatwiej == "tak") {
+										age[data[i].wiek].any_sex_all_yes++
+										age[data[i].wiek].women_all_yes++
+										age[data[i].wiek].any_sex_humanities_yes++
+										age[data[i].wiek].women_humanities_yes++
+									} else if (data[i].kiedyś_łatwiej == "nie") {
+										age[data[i].wiek].any_sex_all_no++
+										age[data[i].wiek].women_all_no++
+										age[data[i].wiek].any_sex_humanities_no++
+										age[data[i].wiek].women_humanities_no++
+									}
+								} else if (data[i].studia == "ścisłe") {
+									if (data[i].kiedyś_łatwiej == "tak") {
+										age[data[i].wiek].any_sex_all_yes++
+										age[data[i].wiek].women_all_yes++
+										age[data[i].wiek].any_sex_science_yes++
+										age[data[i].wiek].women_science_yes++
+									} else if (data[i].kiedyś_łatwiej == "nie") {
+										age[data[i].wiek].any_sex_all_no++
+										age[data[i].wiek].women_all_no++
+										age[data[i].wiek].any_sex_science_no++
+										age[data[i].wiek].women_science_no++
+									}
+								}
+							}
+						}
+						
+						console.log (age)
+						
+						// piramida wieku
+						let chart = new Chart(document.getElementById('myChart').getContext('2d'), {
+							type: "bar",
+							data: {
+								labels: Object.keys(age),
+								datasets: [
+									{
+										label: "Dziś trudniej znaleźć",
+										backgroundColor: '#00ff0033',
+										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_yes); return acc;}, []),
+									},
+									{
+										label: "30 lat temu trudniej znaleźć",
+										backgroundColor: '#ff000066',
+										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_no); return acc;}, []).map((x) => -x),
+									},
+								],
+							},
+							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Dowolne studia, dowolna płeć'
+									},
+								},
+								indexAxis: 'y',
+								scales: {
+									x: {
+										stacked: false,
+										ticks: {
+											beginAtZero: true
+										},
+										min: -20,
+										max: 20
+									},
+									y: {
+										stacked: true,
+										position: "left",
+										reverse: true
+									}
+								}
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							choosen_studies = 0
+							set_data ()
+							chart.update()
+						}
+						function science () {
+							choosen_studies = 1
+							set_data ()
+							chart.update()
+						}
+						function humanities () {
+							choosen_studies = 2
+							set_data ()
+							chart.update()
+						}
+						function all_sex () {
+							choosen_sex = 0
+							set_data ()
+							chart.update()
+						}
+						function men () {
+							choosen_sex = 1
+							set_data ()
+							chart.update()
+						}
+						function women () {
+							choosen_sex = 2
+							set_data ()
+							chart.update()
+						}
+						
+						function set_data () {
+							if (choosen_sex == 0 && choosen_studies == 0) {
+								chart.options.plugins.title.text = "Dowolne studia, dowolna płeć"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 1 && choosen_studies == 0) {
+								chart.options.plugins.title.text = "Dowolne studia, tylko mężczyźni"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_all_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_all_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 2 && choosen_studies == 0) {
+								chart.options.plugins.title.text = "Dowolne studia, tylko kobiety"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_all_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_all_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 0 && choosen_studies == 1) {
+								chart.options.plugins.title.text = "Studia ścisłe, dowolna płeć"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_science_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_science_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 1 && choosen_studies == 1) {
+								chart.options.plugins.title.text = "Studia ścisłe, tylko mężczyźni"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_science_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_science_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 2 && choosen_studies == 1) {
+								chart.options.plugins.title.text = "Studia ścisłe, tylko kobiety"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_science_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_science_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 0 && choosen_studies == 2) {
+								chart.options.plugins.title.text = "Studia humanistyczne, dowolna płeć"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_humanities_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_humanities_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 1 && choosen_studies == 2) {
+								chart.options.plugins.title.text = "Studia humanistyczne, tylko mężczyźni"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_humanities_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].men_humanities_no); return acc;}, []).map((x) => -x)
+							} else if (choosen_sex == 2 && choosen_studies == 2) {
+								chart.options.plugins.title.text = "Studia humanistyczne, tylko kobiety"
+								chart.data.datasets[0].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_humanities_yes); return acc;}, [])
+								chart.data.datasets[1].data = Object.keys(age).reduce(function(acc, key) {acc.push(age[key].women_humanities_no); return acc;}, []).map((x) => -x)
+							}
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("science").addEventListener("click", science);
+						document.getElementById("humanities").addEventListener("click", humanities);
+						document.getElementById("all_sex").addEventListener("click", all_sex);
+						document.getElementById("men").addEventListener("click", men);
+						document.getElementById("women").addEventListener("click", women);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Aleksander Kotarski, Paweł Król, Piotr Książek, Tomasz Rączkowski</p>
+		</footer>
+	</body>
+</html>

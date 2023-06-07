@@ -41,8 +41,7 @@
 						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
 						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Płacenie za pierwszą randkę</a></li>
-						<li><a href="wykres18.html">Stały związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -104,26 +103,11 @@
 							data: {
 								labels: ['Partner/ka z uniwersytetu', 'Partner/ka poznany/a gdzieś indziej'],
 								datasets: [{
-									label: 'Liczba wszystkich studentów',
+									label: 'Procent wszystkich studentów',
 									data: [yes / data.length, no / data.length],
 									backgroundColor: '#00800033',
 									borderColor: '#008000ff',
 									borderWidth: 1
-								},
-								{
-									label: "Dane z Wielkiej Brytanii",
-									data: [0.2],
-									borderColor: "rgba(0,0,0,1)",
-									borderWidth: 1,
-									//important settings
-									//set the width of the line ( or point )
-									pointRadius: 100,
-									// don´t show line betrween points
-									showLine: false,
-									//change points of line chart to line style ( little bit confusin why it´s named point anyway )
-									pointStyle: 'line',
-									//chart type
-									type: "line",
 								}]
 							},
 							options: {
@@ -143,7 +127,6 @@
 							chart.data.datasets[0].data[1] = no / data.length
 							chart.data.datasets[0].backgroundColor = '#00800033'
 							chart.data.datasets[0].borderColor = '#008000ff'
-							chart.data.datasets[1].data[0] = 0.2
 							chart.update()
 						}
 						function science () {
@@ -152,7 +135,6 @@
 							chart.data.datasets[0].data[1] = no_science / data.length
 							chart.data.datasets[0].backgroundColor = '#0000ff33'
 							chart.data.datasets[0].borderColor = '#0000ffff'
-							chart.data.datasets[1].data[0] = 0.12
 							chart.update()
 						}
 						function humanities () {
@@ -161,7 +143,6 @@
 							chart.data.datasets[0].data[1] = no_humanities / data.length
 							chart.data.datasets[0].backgroundColor = '#ffc0cb33'
 							chart.data.datasets[0].borderColor = '#ffc0cbff'
-							chart.data.datasets[1].data[0] = 0 // TODO nie ma danych ile procent poznało na uniwersytecie
 							chart.update()
 						}
 						

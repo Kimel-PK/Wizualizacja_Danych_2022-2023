@@ -41,8 +41,7 @@
 						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
 						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Płacenie za pierwszą randkę</a></li>
-						<li><a href="wykres18.html">Stały związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -162,13 +161,6 @@
 									backgroundColor: [
 										'rgba(0, 0, 255, 0.4)'
 									],
-								},
-								{
-									label: "Liczba osób",
-									data: [sex_without_obligation.all_other_yes, sex_without_obligation.all_other_no],
-									backgroundColor: [
-										'rgba(0, 255, 0, 0.4)'
-									],
 								}]
 							},
 							options: {
@@ -186,21 +178,18 @@
 							chart.options.plugins.title.text = 'Wszyscy studenci'
 							chart.data.datasets[0].data = [sex_without_obligation.all_man_yes, sex_without_obligation.all_man_no]
 							chart.data.datasets[1].data = [sex_without_obligation.all_woman_yes, sex_without_obligation.all_woman_no]
-							chart.data.datasets[2].data = [sex_without_obligation.all_other_yes, sex_without_obligation.all_other_no]
 							chart.update()
 						}
 						function science () {
 							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
 							chart.data.datasets[0].data = [sex_without_obligation.science_man_yes, sex_without_obligation.science_man_no]
 							chart.data.datasets[1].data = [sex_without_obligation.science_woman_yes, sex_without_obligation.science_woman_no]
-							chart.data.datasets[2].data = [sex_without_obligation.science_other_yes, sex_without_obligation.science_other_no]
 							chart.update()
 						}
 						function humanities () {
 							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
 							chart.data.datasets[0].data = [sex_without_obligation.humanities_man_yes, sex_without_obligation.humanities_man_no]
 							chart.data.datasets[1].data = [sex_without_obligation.humanities_woman_yes, sex_without_obligation.humanities_woman_no]
-							chart.data.datasets[2].data = [sex_without_obligation.humanities_other_yes, sex_without_obligation.humanities_other_no]
 							chart.update()
 						}
 						

@@ -1,1 +1,222 @@
-<!-- TODO % osób związek z tą samą płcią [65% women/85% men said they only felt attraction towards other sex.] -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Zaangażowanie w związki</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+		<!-- Chart.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<script src="data.js"></script>
+		<header>
+			<h1>Porównawcza analiza zaangażowania w związki studentów</h1>
+			<p>kierunków humanistycznych, a kierunków ścisłych</p>
+		</header>
+		<div class="container">
+			<div class="row">
+				<aside class="col-2">
+					<h2>Spis treści</h2>
+					<ul>
+						<!-- FIXME menu -->
+						<li><a href="wykres0.html">Informacje o danych</a></li>
+						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
+						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
+						<li><a href="wykres9.html">Sexting</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
+						<li><a href="wykres14.html" class="nav-active">Związki z tą samą płcią</a></li>
+						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
+						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
+					</ul>
+				</aside>
+				<main class="col-10">
+					<h2 class="chart-title">Czy wyobrażasz siebie w związku z osobą tej samej płci?</h2>
+					<canvas class="chart-js" id="myChart"></canvas>
+					<div class="actions-bar">
+						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="science">Pokaż tylko studia ścisłe</button>
+						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+					</div>
+					<hr>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<hr>
+					<div class="row">
+						<div class="col-6">
+							<a class="button button" href="wykres13.html">Poprzedni wykres</a>
+						</div>
+						<div class="col-6 text-right">
+							<a class="button" href="wykres15.html">Następny wykres</a>
+						</div>
+					</div>
+					<script>
+						
+						// wyciąganie danych z pliku (data.js)
+						
+						let count = {
+							all: {
+								men_yes: 0,
+								men_no: 0,
+								women_yes: 0,
+								women_no: 0,
+								other_yes: 0,
+								other_no: 0
+							},
+							science: {
+								men_yes: 0,
+								men_no: 0,
+								women_yes: 0,
+								women_no: 0,
+								other_yes: 0,
+								other_no: 0
+							},
+							humanities: {
+								men_yes: 0,
+								men_no: 0,
+								women_yes: 0,
+								women_no: 0,
+								other_yes: 0,
+								other_no: 0
+							}
+						}
+						
+						for (let i = 0; i < data.length; i++) {
+							if (data[i].płeć == "m") {
+								if (data[i].studia == "humanistyczne") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.men_yes++
+										count.humanities.men_yes++
+									} else {
+										count.all.men_no++
+										count.humanities.men_no++
+									}
+								} else if (data[i].studia == "ścisłe") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.men_yes++
+										count.science.men_yes++
+									} else {
+										count.all.men_no++
+										count.science.men_no++
+									}
+								}
+							} else if (data[i].płeć == "k") {
+								if (data[i].studia == "humanistyczne") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.women_yes++
+										count.humanities.women_yes++
+									} else {
+										count.all.women_no++
+										count.humanities.women_no++
+									}
+								} else if (data[i].studia == "ścisłe") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.women_yes++
+										count.science.women_yes++
+									} else {
+										count.all.women_no++
+										count.science.women_no++
+									}
+								}
+							} else {
+								if (data[i].studia == "humanistyczne") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.other_yes++
+										count.humanities.other_yes++
+									} else {
+										count.all.other_no++
+										count.humanities.other_no++
+									}
+								} else if (data[i].studia == "ścisłe") {
+									if (data[i].ta_sama_płeć == "tak") {
+										count.all.other_yes++
+										count.science.other_yes++
+									} else {
+										count.all.other_no++
+										count.science.other_no++
+									}
+								}
+							}
+						}
+						
+						console.log (count)
+						
+						// tworzenie wykresu
+						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
+							type: 'bar',
+							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszyscy studenci'
+									},
+								},
+								scales: {
+									y: {
+										beginAtZero: true,
+										max: 35
+									}
+								}
+							},
+							data: {
+								labels: ["Tak", "Nie"],
+								datasets: [{
+									label: "Liczba mężczyzn",
+									data: [count.all.men_yes, count.all.men_no],
+									backgroundColor: '#0000ff33',
+									borderColor: '#0000ffff'
+								},
+								{
+									label: "Liczba kobiet",
+									data: [count.all.women_yes, count.all.women_no],
+									backgroundColor: '#ffc0cb86',
+									borderColor: '#ffc0cbff'
+								}]
+							}
+						});
+						
+						// funkcje przycisków akcji
+						function all () {
+							chart.options.plugins.title.text = 'Wszyscy studenci'
+							chart.data.datasets[0].data = [count.all.men_yes, count.all.men_no]
+							chart.data.datasets[1].data = [count.all.women_yes, count.all.women_no]
+							chart.update()
+						}
+						function science () {
+							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.data.datasets[0].data = [count.science.men_yes, count.science.men_no]
+							chart.data.datasets[1].data = [count.science.women_yes, count.science.women_no]
+							chart.update()
+						}
+						function humanities () {
+							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.data.datasets[0].data = [count.humanities.men_yes, count.humanities.men_no]
+							chart.data.datasets[1].data = [count.humanities.women_yes, count.humanities.women_no]
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all").addEventListener("click", all);
+						document.getElementById("science").addEventListener("click", science);
+						document.getElementById("humanities").addEventListener("click", humanities);
+					</script>
+				</main>
+			</div>
+		</div>
+		<footer>
+			<p>Aleksander Kotarski, Paweł Król, Piotr Książek, Tomasz Rączkowski</p>
+		</footer>
+	</body>
+</html>
