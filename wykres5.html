@@ -22,26 +22,25 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html" class="nav-active">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -50,7 +49,7 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystko</button>
+						<button id="all" class="active">Pokaż wszystko</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -63,12 +62,11 @@
 					</p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
-							<a class="button button" href="wykres4.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres1.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
-							<a class="button" href="wykres6.html">Następny wykres</a>
+							<a class="button" href="wykres14.html">Następny wykres</a>
 						</div>
 					</div>
 					<script>
@@ -118,28 +116,37 @@
 								}]
 							},
 							options: {
-								scales: {
-									y: {
-										beginAtZero: true,
-										max: 80
+								plugins: {
+									title: {
+										display: true,
+										text: 'Wszyscy studenci'
 									}
 								}
-							}
+							},
 						});
 						
 						// funkcje przycisków akcji
 						function all () {
-							chart.data.labels = ['W związku tradycyjnym', 'W związku na odległość', 'Nie jest/była w związku']
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
+							chart.options.plugins.title.text = "Wszyscy studenci"
 							chart.data.datasets[0].data = [close_humanities + close_science, distant_humanities + distant_science, none_humanities + none_science]
 							chart.update()
 						}
 						function science () {
-							chart.data.labels = ['W związku tradycyjnym (kierunki ścisłe)', 'W związku na odległość (kierunki ścisłe)', 'Nie jest/była w związku (kierunki ścisłe)']
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
+							chart.options.plugins.title.text = "Studenci kierunków ścisłych"
 							chart.data.datasets[0].data = [close_science, distant_science, none_science]
 							chart.update()
 						}
 						function humanities () {
-							chart.data.labels = ['W związku tradycyjnym (humaniści)', 'W związku na odległość (humaniści)', 'Nie jest/była w związku (humaniści)']
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
+							chart.options.plugins.title.text = "Studenci kierunków humanistycznych"
 							chart.data.datasets[0].data = [close_humanities, close_humanities, none_humanities]
 							chart.update()
 						}

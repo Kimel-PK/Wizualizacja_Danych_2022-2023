@@ -22,26 +22,25 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html" class="nav-active">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -76,7 +75,7 @@
 					<h2 class="chart-title">Liczba zebranych ankiet ze względu na kierunek studiów</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all">Wszystko</button>
+						<button id="all" class="active">Wszystko</button>
 						<button id="offline">Ankiety papierowe</button>
 						<button id="online">Ankiety internetowe</button>
 					</div>
@@ -84,7 +83,7 @@
 					<h2 class="chart-title">Wiek</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
-						<button id="all_2">Wszystko</button>
+						<button id="all_2" class="active">Wszystko</button>
 						<button id="offline_2">Ankiety papierowe</button>
 						<button id="online_2">Ankiety internetowe</button>
 					</div>
@@ -92,9 +91,8 @@
 					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii - edit: tu nie ma co wstawić <!-- TODO --></p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
-							<!--<a class="button button" href="">Poprzedni wykres</a>-->
+							<a class="button button" href="index.html">Wstęp</a>
 						</div>
 						<div class="col-6 text-right">
 							<a class="button" href="wykres1.html">Następny wykres</a>
@@ -199,15 +197,15 @@
 								datasets: [{
 									label: 'Liczba mężczyzn',
 									data: category_men_all,
-									backgroundColor: '#0000ff33',
-									borderColor: '#0000ffff',
+									backgroundColor: colors.men,
+									borderColor: colors.men_border,
 									borderWidth: 1
 								},
 								{
 									label: 'Liczba kobiet',
 									data: category_women_all,
-									backgroundColor: '#ffc0cb33',
-									borderColor: '#ffc0cbff',
+									backgroundColor: colors.women,
+									borderColor: colors.women_border,
 									borderWidth: 1
 								}]
 							},
@@ -220,7 +218,8 @@
 								},
 								scales: {
 									y: {
-										stacked: true
+										stacked: true,
+										max: 40
 									},
 									x: {
 										stacked: true,
@@ -233,18 +232,27 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#offline").removeClass("active");
+							$("#online").removeClass("active");
 							chart.options.plugins.title.text = 'Wszystkie ankiety'
 							chart.data.datasets[0].data = category_men_all
 							chart.data.datasets[1].data = category_women_all
 							chart.update()
 						}
 						function offline () {
+							$("#all").removeClass("active");
+							$("#offline").addClass("active");
+							$("#online").removeClass("active");
 							chart.options.plugins.title.text = 'Ankiety papierowe'
 							chart.data.datasets[0].data = category_men_count_offline
 							chart.data.datasets[1].data = category_women_count_offline
 							chart.update()
 						}
 						function online () {
+							$("#all").removeClass("active");
+							$("#offline").removeClass("active");
+							$("#online").addClass("active");
 							chart.options.plugins.title.text = 'Ankiety online'
 							chart.data.datasets[0].data = category_men_count_online
 							chart.data.datasets[1].data = category_women_count_online
@@ -271,16 +279,18 @@
 								datasets: [
 									{
 										label: "Liczba mężczyzn",
-										backgroundColor: '#0000ff33',
-										borderColor: '#0000ffff',
+										backgroundColor: colors.men,
+										borderColor: colors.men_border,
+										borderWidth: 1,
 										data: men_age_all,
 									},
 									{
 										label: "Liczba kobiet",
-										backgroundColor: '#ffc0cb33',
-										borderColor: '#ffc0cbff',
+										backgroundColor: colors.women,
+										borderColor: colors.women_border,
+										borderWidth: 1,
 										data: women_age_all.map((k) => -k),
-									},
+									}
 								],
 							},
 							options: {
@@ -311,18 +321,27 @@
 						
 						// funkcje przycisków akcji
 						function all_2 () {
+							$("#all_2").addClass("active");
+							$("#offline_2").removeClass("active");
+							$("#online_2").removeClass("active");
 							chart2.options.plugins.title.text = 'Wszystkie ankiety'
 							chart2.data.datasets[0].data = men_age_all
 							chart2.data.datasets[1].data = women_age_all.map((k) => -k)
 							chart2.update()
 						}
 						function offline_2 () {
+							$("#all_2").removeClass("active");
+							$("#offline_2").addClass("active");
+							$("#online_2").removeClass("active");
 							chart2.options.plugins.title.text = 'Ankiety papierowe'
 							chart2.data.datasets[0].data = men_age_offline
 							chart2.data.datasets[1].data = women_age_offline.map((k) => -k)
 							chart2.update()
 						}
 						function online_2 () {
+							$("#all_2").removeClass("active");
+							$("#offline_2").removeClass("active");
+							$("#online_2").addClass("active");
 							chart2.options.plugins.title.text = 'Ankiety online'
 							chart2.data.datasets[0].data = men_age_online
 							chart2.data.datasets[1].data = women_age_online.map((k) => -k)

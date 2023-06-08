@@ -22,33 +22,32 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html" class="nav-active">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Ile osób poznało partnera/partnerkę na uniwersytecie</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystko</button>
+						<button id="all" class="active">Pokaż wszystko</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -62,39 +61,48 @@
 					</p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
 							<a class="button button" href="wykres0.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
-							<a class="button" href="wykres2.html">Następny wykres</a>
+							<a class="button" href="wykres5.html">Następny wykres</a>
 						</div>
 					</div>
 					<script>
 						
 						// wyciąganie danych z pliku (data.js)
-						let yes = 0
-						let no = 0
-						let yes_science = 0
-						let no_science = 0
-						let yes_humanities = 0
-						let no_humanities = 0
+						let count = {
+							all: {
+								yes: 0,
+								no: 0,
+							},
+							science: {
+								yes: 0,
+								no: 0,
+							},
+							humanities: {
+								yes: 0,
+								no: 0,
+							}
+						}
 						
 						for (let i = 0; i < data.length; i++) {
 							if (data[i].partnerka_z_uni == "tak") {
-								yes++
+								count.all.yes++
 								if (data[i].studia == "ścisłe")
-									yes_science++
+									count.science.yes++
 								else if (data[i].studia == "humanistyczne")
-									yes_humanities++
+									count.humanities.yes
 							} else if (data[i].partnerka_z_uni == "nie") {
-								no++
+								count.all.no++
 								if (data[i].studia == "ścisłe")
-									no_science++
+									count.science.no++
 								else if (data[i].studia == "humanistyczne")
-									no_humanities++
+									count.humanities.no++
 							}
 						}
+						
+						console.log (count)
 						
 						// tworzenie wykresu
 						var ctx = document.getElementById('myChart').getContext('2d');
@@ -104,9 +112,9 @@
 								labels: ['Partner/ka z uniwersytetu', 'Partner/ka poznany/a gdzieś indziej'],
 								datasets: [{
 									label: 'Procent wszystkich studentów',
-									data: [yes / data.length, no / data.length],
-									backgroundColor: '#00800033',
-									borderColor: '#008000ff',
+									data: [count.all.yes / (count.all.yes + count.all.no), count.all.no / (count.all.yes + count.all.no)],
+									backgroundColor: colors.default,
+									borderColor: colors.default_border,
 									borderWidth: 1
 								}]
 							},
@@ -122,27 +130,27 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							chart.data.datasets[0].label = 'Procent wszystkich studentów',
-							chart.data.datasets[0].data[0] = yes / data.length
-							chart.data.datasets[0].data[1] = no / data.length
-							chart.data.datasets[0].backgroundColor = '#00800033'
-							chart.data.datasets[0].borderColor = '#008000ff'
+							chart.data.datasets[0].data = [count.all.yes / (count.all.yes + count.all.no), count.all.no / (count.all.yes + count.all.no)]
 							chart.update()
 						}
 						function science () {
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
 							chart.data.datasets[0].label = 'Procent studentów z kierunków ścisłych',
-							chart.data.datasets[0].data[0] = yes_science / data.length
-							chart.data.datasets[0].data[1] = no_science / data.length
-							chart.data.datasets[0].backgroundColor = '#0000ff33'
-							chart.data.datasets[0].borderColor = '#0000ffff'
+							chart.data.datasets[0].data = [count.science.yes / (count.science.yes + count.science.no), count.science.no / (count.science.yes + count.science.no)]
 							chart.update()
 						}
 						function humanities () {
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
 							chart.data.datasets[0].label = 'Procent studentów z kierunków humanistycznych',
-							chart.data.datasets[0].data[0] = yes_humanities / data.length
-							chart.data.datasets[0].data[1] = no_humanities / data.length
-							chart.data.datasets[0].backgroundColor = '#ffc0cb33'
-							chart.data.datasets[0].borderColor = '#ffc0cbff'
+							chart.data.datasets[0].data = [count.humanities.yes / (count.humanities.yes + count.humanities.no), count.humanities.no / (count.humanities.yes + count.humanities.no)]
 							chart.update()
 						}
 						

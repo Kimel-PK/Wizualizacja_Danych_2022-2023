@@ -22,26 +22,25 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
-						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html" class="nav-active">Czy warto szukać partnera/partnerki?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html" class="nav-active">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -50,7 +49,7 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -60,12 +59,11 @@
 					   randkowanie w dzisiejszych czasach jest trudniejsze niż w poprzednich pokoleniach, a 59% z nich uważa, że nie jest w ogóle tego warte.</p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
-							<a class="button button" href="wykres7.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres3.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
-							<a class="button" href="wykres9.html">Następny wykres</a>
+							<a class="button" href="outro.html">Słowo na koniec</a>
 						</div>
 					</div>
 					<script>
@@ -150,6 +148,7 @@
 						console.log (relationship)
 						
 						// tworzenie wykresu
+						// TODO do przemyślenia jak go pokolorować
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'pie',
 							options: {
@@ -236,26 +235,31 @@
 						});
 						
 						// funkcje przycisków akcji
-						// TODO skopiowane z poprzedniego, napisać funkcjonalność
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy studenci'
-							chart.data.datasets[0].data = [sexting.all_man_yes, sexting.all_man_no]
-							chart.data.datasets[1].data = [sexting.all_woman_yes, sexting.all_woman_no]
-							chart.data.datasets[2].data = [sexting.all_other_yes, sexting.all_other_no]
+							chart.data.datasets[0].data = [relationship.present.all_want_marriage + relationship.present.all_not_want_marriage, relationship.past.all_search + relationship.past.all_not_search, relationship.none.all_worth + relationship.none.all_not_worth]
+							chart.data.datasets[1].data = [relationship.present.all_want_marriage, relationship.present.all_not_want_marriage, relationship.past.all_search, relationship.past.all_not_search, relationship.none.all_worth, relationship.none.all_not_worth]
 							chart.update()
 						}
 						function science () {
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
-							chart.data.datasets[0].data = [sexting.science_man_yes, sexting.science_man_no]
-							chart.data.datasets[1].data = [sexting.science_woman_yes, sexting.science_woman_no]
-							chart.data.datasets[2].data = [sexting.science_other_yes, sexting.science_other_no]
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
+							chart.data.datasets[0].data = [relationship.present.science_want_marriage + relationship.present.science_not_want_marriage, relationship.past.science_search + relationship.past.science_not_search, relationship.none.science_worth + relationship.none.science_not_worth]
+							chart.data.datasets[1].data = [relationship.present.science_want_marriage, relationship.present.science_not_want_marriage, relationship.past.science_search, relationship.past.science_not_search, relationship.none.science_worth, relationship.none.science_not_worth]
 							chart.update()
 						}
 						function humanities () {
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
-							chart.data.datasets[0].data = [sexting.humanities_man_yes, sexting.humanities_man_no]
-							chart.data.datasets[1].data = [sexting.humanities_woman_yes, sexting.humanities_woman_no]
-							chart.data.datasets[2].data = [sexting.humanities_other_yes, sexting.humanities_other_no]
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
+							chart.data.datasets[0].data = [relationship.present.humanities_want_marriage + relationship.present.humanities_not_want_marriage, relationship.past.humanities_search + relationship.past.humanities_not_search, relationship.none.humanities_worth + relationship.none.humanities_not_worth]
+							chart.data.datasets[1].data = [relationship.present.humanities_want_marriage, relationship.present.humanities_not_want_marriage, relationship.past.humanities_search, relationship.past.humanities_not_search, relationship.none.humanities_worth, relationship.none.humanities_not_worth]
 							chart.update()
 						}
 						

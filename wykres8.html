@@ -22,33 +22,32 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
-						<li><a href="wykres7.html">Aplikacje randkowe vol 2</a></li>
+						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html" class="nav-active">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Seks bez zobowiązań</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -56,9 +55,8 @@
 					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
-							<a class="button button" href="wykres7.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres4.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
 							<a class="button" href="wykres9.html">Następny wykres</a>
@@ -138,36 +136,34 @@
 						// tworzenie wykresu
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'bar',
+							data: {
+								labels: ["Liczba osób deklarująca, że uprawiała seks", "Liczba osób deklarująca, że nie uprawiała seksu"],
+								datasets: [{
+									label: "Liczba mężczyzn",
+									data: [sex_without_obligation.all_man_yes / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no), sex_without_obligation.all_man_no / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no)],
+									backgroundColor: colors.men,
+									borderColor: colors.men_border,
+									borderWidth: 1
+								},
+								{
+									label: "Liczba kobiet",
+									data: [sex_without_obligation.all_woman_yes / (sex_without_obligation.all_woman_yes + sex_without_obligation.all_woman_no), sex_without_obligation.all_woman_no / (sex_without_obligation.all_woman_yes + sex_without_obligation.all_woman_no)],
+									backgroundColor: colors.women,
+									borderColor: colors.women_border,
+									borderWidth: 1
+								}]
+							},
 							options: {
 								plugins: {
 									title: {
 										display: true,
 										text: 'Wszyscy studenci'
 									}
-								}
-							},
-							data: {
-								labels: ["Liczba osób deklarująca, że uprawiała seks", "Liczba osób deklarująca, że nie uprawiała seksu"],
-								datasets: [{
-									label: "Liczba mężczyzn",
-									data: [sex_without_obligation.all_man_yes, sex_without_obligation.all_man_no],
-									backgroundColor: [
-										'rgba(255, 0, 0, 0.4)'
-									],
 								},
-								{
-									label: "Liczba kobiet",
-									data: [sex_without_obligation.all_woman_yes, sex_without_obligation.all_woman_no],
-									backgroundColor: [
-										'rgba(0, 0, 255, 0.4)'
-									],
-								}]
-							},
-							options: {
 								scales: {
 									y: {
 										beginAtZero: true,
-										max: 20
+										max: 1
 									}
 								}
 							}
@@ -175,21 +171,30 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy studenci'
-							chart.data.datasets[0].data = [sex_without_obligation.all_man_yes, sex_without_obligation.all_man_no]
-							chart.data.datasets[1].data = [sex_without_obligation.all_woman_yes, sex_without_obligation.all_woman_no]
+							chart.data.datasets[0].data = [sex_without_obligation.all_man_yes / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no), sex_without_obligation.all_man_no / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no)]
+							chart.data.datasets[1].data = [sex_without_obligation.all_woman_yes / (sex_without_obligation.all_woman_yes + sex_without_obligation.all_woman_no), sex_without_obligation.all_woman_no / (sex_without_obligation.all_woman_yes + sex_without_obligation.all_woman_no)]
 							chart.update()
 						}
 						function science () {
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
-							chart.data.datasets[0].data = [sex_without_obligation.science_man_yes, sex_without_obligation.science_man_no]
-							chart.data.datasets[1].data = [sex_without_obligation.science_woman_yes, sex_without_obligation.science_woman_no]
+							chart.data.datasets[0].data = [sex_without_obligation.science_man_yes / (sex_without_obligation.science_man_yes + sex_without_obligation.science_man_no), sex_without_obligation.science_man_no / (sex_without_obligation.science_man_yes + sex_without_obligation.science_man_no)]
+							chart.data.datasets[1].data = [sex_without_obligation.science_woman_yes / (sex_without_obligation.science_woman_yes + sex_without_obligation.science_woman_no), sex_without_obligation.science_woman_no / (sex_without_obligation.science_woman_yes + sex_without_obligation.science_woman_no)]
 							chart.update()
 						}
 						function humanities () {
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
 							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
-							chart.data.datasets[0].data = [sex_without_obligation.humanities_man_yes, sex_without_obligation.humanities_man_no]
-							chart.data.datasets[1].data = [sex_without_obligation.humanities_woman_yes, sex_without_obligation.humanities_woman_no]
+							chart.data.datasets[0].data = [sex_without_obligation.humanities_man_yes / (sex_without_obligation.humanities_man_yes + sex_without_obligation.humanities_man_no), sex_without_obligation.humanities_man_no / (sex_without_obligation.humanities_man_yes + sex_without_obligation.humanities_man_no)]
+							chart.data.datasets[1].data = [sex_without_obligation.humanities_woman_yes / (sex_without_obligation.humanities_woman_yes + sex_without_obligation.humanities_woman_no), sex_without_obligation.humanities_woman_no / (sex_without_obligation.humanities_woman_yes + sex_without_obligation.humanities_woman_no)]
 							chart.update()
 						}
 						

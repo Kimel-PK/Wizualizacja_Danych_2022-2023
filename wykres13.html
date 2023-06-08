@@ -22,25 +22,25 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
+						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html" class="nav-active">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -48,15 +48,16 @@
 					<!-- 1 wykres -->
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystkie kierunki studiów</button>
+						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
+					<hr>
 					<!-- 2 wykres -->
 					<h2 class="chart-title">Presja ze strony czasu skraca związki</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
-						<button id="all_2">Pokaż wszystkie kierunki studiów</button>
+						<button id="all_2" class="active">Pokaż wszystkie kierunki studiów</button>
 						<button id="science_2">Pokaż tylko studia ścisłe</button>
 						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -64,12 +65,11 @@
 					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
-							<a class="button button" href="wykres7.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres9.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
-							<a class="button" href="wykres9.html">Następny wykres</a>
+							<a class="button" href="wykres16.html">Następny wykres</a>
 						</div>
 					</div>
 					<script>
@@ -188,7 +188,7 @@
 								elements: {
 									point: {
 										borderWidth: 8,
-										borderColor: 'rgba(255, 0, 0.4)',
+										borderColor: colors.default_no_transparency,
 										hoverBorderWidth: 16
 									}
 								}
@@ -197,25 +197,32 @@
 								datasets: [{
 									label: "Długość związku",
 									data: Object.keys(pressure_vs_length.all.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.all.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.all.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.all.no[key]]); return acc;}, [])),
-									backgroundColor: [
-										'rgba(255, 0, 0.4)'
-									],
+									backgroundColor: colors.default_no_transparency,
 								}]
 							}
 						});
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy studenci'
 							chart.data.datasets[0].data = Object.keys(pressure_vs_length.all.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.all.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.all.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.all.no[key]]); return acc;}, []))
 							chart.update()
 						}
 						function science () {
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
 							chart.data.datasets[0].data = Object.keys(pressure_vs_length.science.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.science.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.science.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.science.no[key]]); return acc;}, []))
 							chart.update()
 						}
 						function humanities () {
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
 							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
 							chart.data.datasets[0].data = Object.keys(pressure_vs_length.humanities.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.humanities.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.humanities.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.humanities.no[key]]); return acc;}, []))
 							chart.update()
@@ -321,15 +328,16 @@
 										["Chce długoterminowego związku", "Uważa, że presja nie prowadzi do krótkich związków", pressure_vs_long_term.all.long_term_no_pressure],
 										["Nie chce długoterminowego związku", "Uważa, że presja nie prowadzi do krótkich związków", pressure_vs_long_term.all.short_term_no_pressure]
 									],
-									backgroundColor: [
-										'rgba(255, 0, 0.4)'
-									],
+									backgroundColor: colors.default_no_transparency,
 								}]
 							}
 						});
 						
 						// funkcje przycisków akcji
 						function all_2 () {
+							$("#all_2").addClass("active");
+							$("#science_2").removeClass("active");
+							$("#humanities_2").removeClass("active");
 							chart2.options.plugins.title.text = 'Wszyscy studenci'
 							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.all.long_term_pressure
 							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.all.short_term_pressure
@@ -338,6 +346,9 @@
 							chart2.update()
 						}
 						function science_2 () {
+							$("#all_2").removeClass("active");
+							$("#science_2").addClass("active");
+							$("#humanities_2").removeClass("active");
 							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
 							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.science.long_term_pressure
 							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.science.short_term_pressure
@@ -346,6 +357,9 @@
 							chart2.update()
 						}
 						function humanities_2 () {
+							$("#all_2").removeClass("active");
+							$("#science_2").removeClass("active");
+							$("#humanities_2").addClass("active");
 							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
 							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.humanities.long_term_pressure
 							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.humanities.short_term_pressure

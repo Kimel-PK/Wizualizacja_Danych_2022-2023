@@ -121,6 +121,10 @@ button:hover {
 	background-color: var(--secondary-hover-color);
 }
 
+button.active {
+	background-color: var(--main-color);
+}
+
 .chart-title {
 	text-align: center;
 }
@@ -155,6 +159,10 @@ table th {
 .chart-small {
 	width: 60%;
 	margin: auto;
+}
+
+.margin-top {
+	margin-top: 1em;
 }
 
 /* footer */

@@ -22,49 +22,51 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html" class="nav-active">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html" class="nav-active">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="text-center">Randkowanie trudniejsze kiedyś niż dziś</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
-						<hr>
-						<button id="all_sex">Pokaż wszystko</button>
-						<button id="men">Pokaż tylko mężczyzn</button>
-						<button id="women">Pokaż tylko kobiety</button>
+						<div>
+							<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
+							<button id="science">Pokaż tylko studia ścisłe</button>
+							<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						</div>
+						<div class="margin-top">
+							<button id="all_sex" class="active">Pokaż wszystko</button>
+							<button id="men">Pokaż tylko mężczyzn</button>
+							<button id="women">Pokaż tylko kobiety</button>
+						</div>
 					</div>
 					<hr>
 					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
-							<a class="button button" href="wykres14.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres7.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
-							<a class="button" href="wykres16.html">Następny wykres</a>
+							<a class="button" href="wykres4.html">Następny wykres</a>
 						</div>
 					</div>
 					<script>
@@ -167,13 +169,17 @@
 								datasets: [
 									{
 										label: "Dziś trudniej znaleźć",
-										backgroundColor: '#00ff0033',
 										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_yes); return acc;}, []),
+										backgroundColor: colors.positive,
+										borderColor: colors.positive_border,
+										borderWidth: 1,
 									},
 									{
 										label: "30 lat temu trudniej znaleźć",
-										backgroundColor: '#ff000066',
 										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_no); return acc;}, []).map((x) => -x),
+										backgroundColor: colors.negative,
+										borderColor: colors.negative_border,
+										borderWidth: 1,
 									},
 								],
 							},
@@ -205,31 +211,49 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							choosen_studies = 0
 							set_data ()
 							chart.update()
 						}
 						function science () {
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
 							choosen_studies = 1
 							set_data ()
 							chart.update()
 						}
 						function humanities () {
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
 							choosen_studies = 2
 							set_data ()
 							chart.update()
 						}
 						function all_sex () {
+							$("#all_sex").addClass("active");
+							$("#men").removeClass("active");
+							$("#women").removeClass("active");
 							choosen_sex = 0
 							set_data ()
 							chart.update()
 						}
 						function men () {
+							$("#all_sex").removeClass("active");
+							$("#men").addClass("active");
+							$("#women").removeClass("active");
 							choosen_sex = 1
 							set_data ()
 							chart.update()
 						}
 						function women () {
+							$("#all_sex").removeClass("active");
+							$("#men").removeClass("active");
+							$("#women").addClass("active");
 							choosen_sex = 2
 							set_data ()
 							chart.update()

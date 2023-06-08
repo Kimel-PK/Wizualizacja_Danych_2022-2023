@@ -1,3 +1,21 @@
+var colors = {
+	men: '#0000ff33',
+	men_border: '#0000ffff',
+	women: '#ffc0cb93',
+	women_border: '#e5acb6ff',
+	positive: '#00ff0033',
+	positive_border: '#00ff00ff',
+	negative: '#ff000033',
+	negative_border: '#ff0000ff',
+	none: '#eeeeee',
+	none_border: '#d6d6d6',
+	default: '#0000ff33',
+	default_border: '#0000ffff',
+	default_contrast: '#ff000033',
+	default_contrast_border: '#ff0000ff',
+	default_no_transparency: '#b2b2ffff',
+}
+
 var data = 
 [
 	{

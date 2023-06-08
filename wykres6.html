@@ -22,26 +22,25 @@
 				<aside class="col-2">
 					<h2>Spis treści</h2>
 					<ul>
-						<!-- FIXME menu -->
 						<li><a href="index.html">Wstęp</a></li>
 						<li><a href="wykres0.html">Informacje o danych</a></li>
 						<li><a href="wykres1.html">Partnerzy z uniwersytetu</a></li>
-						<li><a href="wykres2.html">Długość trwania związku</a></li>
-						<li><a href="wykres3.html">Najczęstsze powody zerwania</a></li>
-						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres5.html">Związki na odległość</a></li>
+						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
+						<li><a href="wykres2.html">Długość trwania związku</a></li>
+						<li><a href="wykres17.html">Stały związek</a></li>
 						<li><a href="wykres6.html" class="nav-active">Aplikacje randkowe</a></li>
 						<li><a href="wykres7.html">Aplikacje randkowe vol. 2</a></li>
+						<li><a href="wykres15.html">Czy teraz trudniej znaleźć partnera niż kiedyś?</a></li>
+						<li><a href="wykres4.html">Kontakty seksualne</a></li>
 						<li><a href="wykres8.html">Seks bez zobowiązań</a></li>
 						<li><a href="wykres9.html">Sexting</a></li>
-						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
-						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
-						<li><a href="wykres12.html">Priorytety</a></li>
 						<li><a href="wykres13.html">Presja powoduje krótsze związki</a></li>
-						<li><a href="wykres14.html">Związki z tą samą płcią</a></li>
-						<li><a href="wykres15.html">Trudność znalezienia partnera</a></li>
 						<li><a href="wykres16.html">Niemonogamiczny związek</a></li>
-						<li><a href="wykres17.html">Stały związek</a></li>
+						<li><a href="wykres12.html">Priorytety</a></li>
+						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
+						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
+						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -50,7 +49,7 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all">Pokaż wszystko</button>
+						<button id="all" class="active">Pokaż wszystko</button>
 						<button id="science">Pokaż tylko studia ścisłe</button>
 						<button id="humanities">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -60,7 +59,7 @@
 						<canvas class="chart-js" id="myChart2"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all_2">Pokaż wszystko</button>
+						<button id="all_2" class="active">Pokaż wszystko</button>
 						<button id="science_2">Pokaż tylko studia ścisłe</button>
 						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -70,7 +69,7 @@
 						<canvas class="chart-js" id="myChart3"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all_3">Pokaż wszystko</button>
+						<button id="all_3" class="active">Pokaż wszystko</button>
 						<button id="science_3">Pokaż tylko studia ścisłe</button>
 						<button id="humanities_3">Pokaż tylko studia humanistyczne</button>
 					</div>
@@ -79,7 +78,7 @@
 					<hr>
 					<div class="row">
 						<div class="col-6">
-							<a class="button button" href="wykres5.html">Poprzedni wykres</a>
+							<a class="button button" href="wykres17.html">Poprzedni wykres</a>
 						</div>
 						<div class="col-6 text-right">
 							<a class="button" href="wykres7.html">Następny wykres</a>
@@ -177,17 +176,26 @@
 						
 						// funkcje przycisków akcji
 						function all () {
+							$("#all").addClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").removeClass("active");
 							chart.options.plugins.title.text = 'Wszyscy studenci'
 							chart.data.datasets[0].data = [(have_dating_app_humanities + have_dating_app_science) / (humanities_count + science_count) * 100, (dont_have_dating_app_humanities + dont_have_dating_app_science) / (humanities_count + science_count) * 100],
 							chart.update()
 						}
 						function science () {
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							$("#all").removeClass("active");
+							$("#science").addClass("active");
+							$("#humanities").removeClass("active");
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = [have_dating_app_science / science_count * 100, dont_have_dating_app_science / science_count * 100],
 							chart.update()
 						}
 						function humanities () {
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							$("#all").removeClass("active");
+							$("#science").removeClass("active");
+							$("#humanities").addClass("active");
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = [have_dating_app_humanities / humanities_count * 100, dont_have_dating_app_humanities / humanities_count * 100],
 							chart.update()
 						}
@@ -223,19 +231,27 @@
 						});
 						
 						// funkcje przycisków akcji
-						// FIXME coś się tutaj dziwnie zachowuje
 						function all_2 () {
+							$("#all_2").addClass("active");
+							$("#science_2").removeClass("active");
+							$("#humanities_2").removeClass("active");
 							chart2.options.plugins.title.text = 'Wszyscy studenci'
 							chart2.data.datasets[0].data = [(want_meet.humanities + want_meet.science) / (want_meet.all_humanities + want_meet.all_science) * 100, (want_meet.all_humanities + want_meet.all_science - want_meet.humanities - want_meet.science) / (want_meet.all_humanities + want_meet.all_science) * 100]
 							chart2.update()
 						}
 						function science_2 () {
-							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							$("#all_2").removeClass("active");
+							$("#science_2").addClass("active");
+							$("#humanities_2").removeClass("active");
+							chart2.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart2.data.datasets[0].data = [want_meet.science / want_meet.all_science * 100, (want_meet.all_science - want_meet.science) / want_meet.all_science * 100],
 							chart2.update()
 						}
 						function humanities_2 () {
-							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							$("#all_2").removeClass("active");
+							$("#science_2").removeClass("active");
+							$("#humanities_2").addClass("active");
+							chart2.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart2.data.datasets[0].data = [want_meet.humanities / want_meet.all_humanities * 100, (want_meet.all_humanities - want_meet.humanities) / want_meet.all_humanities * 100]
 							chart2.update()
 						}
@@ -274,17 +290,26 @@
 						// funkcje przycisków akcji
 						// FIXME coś się tutaj dziwnie zachowuje
 						function all_3 () {
+							$("#all_3").addClass("active");
+							$("#science_3").removeClass("active");
+							$("#humanities_3").removeClass("active");
 							chart3.options.plugins.title.text = 'Wszyscy studenci'
 							chart3.data.datasets[0].data = [(call_before.humanities + call_before.science) / (call_before.all_humanities + call_before.all_science) * 100, (call_before.all_humanities + call_before.all_science - call_before.humanities - call_before.science) / (call_before.all_humanities + call_before.all_science) * 100]
 							chart3.update()
 						}
 						function science_3 () {
-							chart3.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							$("#all_3").removeClass("active");
+							$("#science_3").addClass("active");
+							$("#humanities_3").removeClass("active");
+							chart3.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart3.data.datasets[0].data = [call_before.science / call_before.all_science * 100, (call_before.all_science - call_before.science) / call_before.all_science * 100],
 							chart3.update()
 						}
 						function humanities_3 () {
-							chart3.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							$("#all_3").removeClass("active");
+							$("#science_3").removeClass("active");
+							$("#humanities_3").addClass("active");
+							chart3.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart3.data.datasets[0].data = [call_before.humanities / call_before.all_humanities * 100, (call_before.all_humanities - call_before.humanities) / call_before.all_humanities * 100]
 							chart3.update()
 						}
