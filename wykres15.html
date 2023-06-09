@@ -41,25 +41,26 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
-					<h2 class="text-center">Randkowanie trudniejsze kiedyś niż dziś</h2>
+					<h2 class="text-center">Czy randkowanie było trudniejsze kiedyś niż dziś?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
 						<div>
-							<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-							<button id="science">Pokaż tylko studia ścisłe</button>
-							<button id="humanities">Pokaż tylko studia humanistyczne</button>
+							<button id="all" class="active">Dowolne studia</button>
+							<button id="science">Studia ścisłe</button>
+							<button id="humanities">Studia humanistyczne</button>
 						</div>
 						<div class="margin-top">
-							<button id="all_sex" class="active">Pokaż wszystko</button>
-							<button id="men">Pokaż tylko mężczyzn</button>
-							<button id="women">Pokaż tylko kobiety</button>
+							<button id="all_sex" class="active">Dowolna płeć</button>
+							<button id="men">Mężczyźni</button>
+							<button id="women">Kobiety</button>
 						</div>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -168,17 +169,17 @@
 								labels: Object.keys(age),
 								datasets: [
 									{
-										label: "Dziś trudniej znaleźć",
+										label: "Dzisiaj trudniej",
 										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_yes); return acc;}, []),
-										backgroundColor: colors.positive,
-										borderColor: colors.positive_border,
+										backgroundColor: colors.default,
+										borderColor: colors.default_border,
 										borderWidth: 1,
 									},
 									{
-										label: "30 lat temu trudniej znaleźć",
+										label: "Trudniej 30 lat temu",
 										data: Object.keys(age).reduce(function(acc, key) {acc.push(age[key].any_sex_all_no); return acc;}, []).map((x) => -x),
-										backgroundColor: colors.negative,
-										borderColor: colors.negative_border,
+										backgroundColor: colors.default_contrast,
+										borderColor: colors.default_contrast_border,
 										borderWidth: 1,
 									},
 								],
@@ -195,10 +196,13 @@
 									x: {
 										stacked: false,
 										ticks: {
-											beginAtZero: true
+											beginAtZero: true,
+											callback: (v) => {
+												return v < 0 ? -v : v;
+											},
 										},
-										min: -20,
-										max: 20
+										min: -25,
+										max: 25
 									},
 									y: {
 										stacked: true,

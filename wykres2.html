@@ -41,25 +41,22 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Długość trwania w związku, a kierunek studiów</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystko</button>
-						<button id="now">Pokaż tylko trwające związki</button>
-						<button id="past">Pokaż tylko przeszłe związki</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="now">Trwające związki</button>
+						<button id="past">Przeszłe związki</button>
 					</div>
 					<hr>
 					<p>
-						Średnio związki w których znajdują się studenci w wielkiej Brytanii trawją między 6 a 12 miesiącami,
-						co jest wynikim mniejszym od średniej dla osób w wieku 20-30 lat która wynosi ~23 miesiące.
-						Zebrane przez nas dane wskazują na dłuższy czas trwania związków związków wśród studentów naszej uczelni - uwzględniamy tutaj związki które już się zakończyły jak i te które
-						wciąż trwają.
+						Średnio związki w których znajdują się studenci z Wielkiej Brytanii trwają między 6 a 12 miesiącami, co jest wynikiem mniejszym od średniej dla osób w wieku 20-30 lat która wynosi ~23 miesiące. Zebrane przez nas dane wskazują na dłuższy czas trwania związków wśród studentów naszej uczelni - uwzględniamy tutaj związki które już się zakończyły jak i te które wciąż trwają.
 						</br></br>
-						Dane przytoczono na podstawie badania:
-						Testing theories of romantic development from adolescence to young adulthood: Evidence of a developmental sequence
+						Dane przytoczono na podstawie badania: "Testing theories of romantic development from adolescence to young adulthood: Evidence of a developmental sequence"
 					</p>
 					<hr>
 					<div class="row">
@@ -130,15 +127,15 @@
 								datasets: [{
 									label: 'Czas trwania związku (w miesiącach)',
 									data: now_pairs.concat (past_pairs),
-									backgroundColor: '#00800033',
-									borderColor: '#008000ff',
+									backgroundColor: colors.default,
+									borderColor: colors.default_border,
 									borderWidth: 1
 								},
 								{
 									label: 'Średni czas trwania związku (w miesiącach)',
 									data: all_avg,
-									backgroundColor: '#80000033',
-									borderColor: '#800000ff',
+									backgroundColor: colors.default_contrast,
+									borderColor: colors.default_contrast_border,
 									borderWidth: 1,
 									pointRadius: 10
 								}]

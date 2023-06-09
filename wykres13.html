@@ -41,28 +41,28 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
-					<h2 class="chart-title">Presja ze strony czasu skraca związki</h2>
+					<h2 class="chart-title">Presja wywołana studiami/pracą prowadzi do krótkotrwałych relacji</h2>
 					<!-- 1 wykres -->
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<!-- 2 wykres -->
-					<h2 class="chart-title">Presja ze strony czasu skraca związki</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
-						<button id="all_2" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science_2">Pokaż tylko studia ścisłe</button>
-						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
+						<button id="all_2" class="active">Wszystko</button>
+						<button id="science_2">Studia ścisłe</button>
+						<button id="humanities_2">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -76,8 +76,8 @@
 						
 						// wyciąganie danych z pliku (data.js)
 						
-						let label_yes = "uważają że presja to krótkie związki"
-						let label_no = "presja nie ma związku z związkami :)"
+						let label_yes = "Osoby zgadzające się"
+						let label_no = "Osoby niezgadzające się"
 						
 						// wykres 1
 						let pressure_vs_length = {
@@ -178,7 +178,11 @@
 								scales: {
 									y: {
 										beginAtZero: true,
-										max: 80
+										max: 80,
+										title: {
+											display: true,
+											text: 'Długość trwania związku (w miesiącach)'
+										}
 									},
 									x: {
 										type: 'category',
@@ -195,7 +199,7 @@
 							},
 							data: {
 								datasets: [{
-									label: "Długość związku",
+									label: "Ilość osób",
 									data: Object.keys(pressure_vs_length.all.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.all.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.all.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.all.no[key]]); return acc;}, [])),
 									backgroundColor: colors.default_no_transparency,
 								}]
@@ -215,7 +219,7 @@
 							$("#all").removeClass("active");
 							$("#science").addClass("active");
 							$("#humanities").removeClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = Object.keys(pressure_vs_length.science.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.science.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.science.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.science.no[key]]); return acc;}, []))
 							chart.update()
 						}
@@ -223,7 +227,7 @@
 							$("#all").removeClass("active");
 							$("#science").removeClass("active");
 							$("#humanities").addClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = Object.keys(pressure_vs_length.humanities.yes).reduce(function(acc, key) {acc.push([label_yes, key, pressure_vs_length.humanities.yes[key]]); return acc;}, []).concat(Object.keys(pressure_vs_length.humanities.no).reduce(function(acc, key) {acc.push([label_no, key, pressure_vs_length.humanities.no[key]]); return acc;}, []))
 							chart.update()
 						}
@@ -349,7 +353,7 @@
 							$("#all_2").removeClass("active");
 							$("#science_2").addClass("active");
 							$("#humanities_2").removeClass("active");
-							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart2.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.science.long_term_pressure
 							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.science.short_term_pressure
 							chart2.data.datasets[0].data[2][2] = pressure_vs_long_term.science.long_term_no_pressure
@@ -360,7 +364,7 @@
 							$("#all_2").removeClass("active");
 							$("#science_2").removeClass("active");
 							$("#humanities_2").addClass("active");
-							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart2.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart2.data.datasets[0].data[0][2] = pressure_vs_long_term.humanities.long_term_pressure
 							chart2.data.datasets[0].data[1][2] = pressure_vs_long_term.humanities.short_term_pressure
 							chart2.data.datasets[0].data[2][2] = pressure_vs_long_term.humanities.long_term_no_pressure

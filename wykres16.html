@@ -41,18 +41,19 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Czy mógłbyś/mogłabyś być w niemonogamicznym związku?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -166,22 +167,22 @@
 								scales: {
 									y: {
 										beginAtZero: true,
-										max: 45
+										max: 1
 									}
 								}
 							},
 							data: {
 								labels: ["Tak", "Nie"],
 								datasets: [{
-									label: "Liczba mężczyzn",
-									data: [non_monogamous.all.men_yes, non_monogamous.all.men_no],
+									label: "Procent mężczyzn",
+									data: [non_monogamous.all.men_yes / (non_monogamous.all.men_yes + non_monogamous.all.men_no), non_monogamous.all.men_no / (non_monogamous.all.men_yes + non_monogamous.all.men_no)],
 									backgroundColor: colors.men,
 									borderColor: colors.men_border,
 									borderWidth: 1
 								},
 								{
-									label: "Liczba kobiet",
-									data: [non_monogamous.all.women_yes, non_monogamous.all.women_no],
+									label: "Procent kobiet",
+									data: [non_monogamous.all.women_yes / (non_monogamous.all.women_yes + non_monogamous.all.women_no), non_monogamous.all.women_no / (non_monogamous.all.women_yes + non_monogamous.all.women_no)],
 									backgroundColor: colors.women,
 									borderColor: colors.women_border,
 									borderWidth: 1
@@ -195,8 +196,8 @@
 							$("#science").removeClass("active")
 							$("#humanities").removeClass("active")
 							chart.options.plugins.title.text = 'Wszyscy studenci'
-							chart.data.datasets[0].data = [non_monogamous.all.men_yes, non_monogamous.all.men_no]
-							chart.data.datasets[1].data = [non_monogamous.all.women_yes, non_monogamous.all.women_no]
+							chart.data.datasets[0].data = [non_monogamous.all.men_yes / (non_monogamous.all.men_yes + non_monogamous.all.men_no), non_monogamous.all.men_no / (non_monogamous.all.men_yes + non_monogamous.all.men_no)]
+							chart.data.datasets[1].data = [non_monogamous.all.women_yes / (non_monogamous.all.women_yes + non_monogamous.all.women_no), non_monogamous.all.women_no / (non_monogamous.all.women_yes + non_monogamous.all.women_no)]
 							chart.update()
 						}
 						function science () {
@@ -204,8 +205,8 @@
 							$("#science").addClass("active")
 							$("#humanities").removeClass("active")
 							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
-							chart.data.datasets[0].data = [non_monogamous.science.men_yes, non_monogamous.science.men_no]
-							chart.data.datasets[1].data = [non_monogamous.science.women_yes, non_monogamous.science.women_no]
+							chart.data.datasets[0].data = [non_monogamous.science.men_yes / (non_monogamous.science.men_yes + non_monogamous.science.men_no), non_monogamous.science.men_no / (non_monogamous.science.men_yes + non_monogamous.science.men_no)]
+							chart.data.datasets[1].data = [non_monogamous.science.women_yes / (non_monogamous.science.women_yes + non_monogamous.science.women_no), non_monogamous.science.women_no / (non_monogamous.science.women_yes + non_monogamous.science.women_no)]
 							chart.update()
 						}
 						function humanities () {
@@ -213,8 +214,8 @@
 							$("#science").removeClass("active")
 							$("#humanities").addClass("active")
 							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
-							chart.data.datasets[0].data = [non_monogamous.humanities.men_yes, non_monogamous.humanities.men_no]
-							chart.data.datasets[1].data = [non_monogamous.humanities.women_yes, non_monogamous.humanities.women_no]
+							chart.data.datasets[0].data = [non_monogamous.humanities.men_yes / (non_monogamous.humanities.men_yes + non_monogamous.humanities.men_no), non_monogamous.humanities.men_no / (non_monogamous.humanities.men_yes + non_monogamous.humanities.men_no)]
+							chart.data.datasets[1].data = [non_monogamous.humanities.women_yes / (non_monogamous.humanities.women_yes + non_monogamous.humanities.women_no), non_monogamous.humanities.women_no / (non_monogamous.humanities.women_yes + non_monogamous.humanities.women_no)]
 							chart.update()
 						}
 						

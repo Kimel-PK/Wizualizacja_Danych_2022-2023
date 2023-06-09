@@ -41,6 +41,7 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -88,7 +89,7 @@
 						<button id="online_2">Ankiety internetowe</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii - edit: tu nie ma co wstawić <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii - edit: tu nie ma co wstawić <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -219,7 +220,7 @@
 								scales: {
 									y: {
 										stacked: true,
-										max: 40
+										max: 65
 									},
 									x: {
 										stacked: true,
@@ -305,10 +306,13 @@
 									x: {
 										stacked: false,
 										ticks: {
-											beginAtZero: true
+											beginAtZero: true,
+											callback: (v) => {
+												return v < 0 ? -v : v;
+											},
 										},
-										min: -20,
-										max: 20
+										min: -25,
+										max: 25
 									},
 									y: {
 										stacked: true,

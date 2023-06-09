@@ -41,24 +41,23 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
-					<h2 class="chart-title">Priorytety</h2>
+					<h2 class="chart-title">Co jest ważniejsze? Nauka/praca czy partner?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<p>
-						Badanie przeprowadzone przez StudyMode pokazuje, że studenci obecnie priorytezują swoje oceny ponad życiem miłosnym 
-						- jednak nie przeszkadza im to w angażowaniu się w krótkie romanse kwitują autorzy badania.
+						Badanie przeprowadzone przez StudyMode pokazuje, że studenci obecnie priorytetyzują swoje oceny ponad życie miłosne - jednak nie przeszkadza im to w angażowaniu się w krótkie romanse - kwitują autorzy badania.
 					</p>
 					<hr>
 					<div class="row">
-						<!-- TODO -->
 						<div class="col-6">
 							<a class="button button" href="wykres16.html">Poprzedni wykres</a>
 						</div>
@@ -113,23 +112,33 @@
 									},
 								},
 								scales: {
+									x: {
+										title: {
+											display: true,
+											text: "Wiek"
+										}
+									},
 									y: {
 										beginAtZero: true,
-										max: 20
+										max: 25,
+										title: {
+											display: true,
+											text: "Liczba osób"
+										}
 									}
 								}
 							},
 							data: {
 								labels: Object.keys(priorities),
 								datasets: [{
-									label: "Liczba osób uważających, że najważniejszy jest partner/partnerka",
+									label: "Partner/partnerka",
 									data: Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].partner_all); return acc;}, []),
-									backgroundColor: colors.default,
+									backgroundColor: '#0000ffff',
 								},
 								{
-									label: "Liczba osób uważających że najważniejsza jest nauka/praca",
+									label: "Nauka/praca",
 									data: Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].work_all); return acc;}, []),
-									backgroundColor: colors.default_contrast,
+									backgroundColor: '#ff0000ff',
 								}]
 							}
 						});
@@ -148,7 +157,7 @@
 							$("#all").removeClass("active");
 							$("#science").addClass("active");
 							$("#humanities").removeClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].partner_science); return acc;}, [])
 							chart.data.datasets[1].data = Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].work_science); return acc;}, [])
 							chart.update()
@@ -157,7 +166,7 @@
 							$("#all").removeClass("active");
 							$("#science").removeClass("active");
 							$("#humanities").addClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].partner_humanities); return acc;}, [])
 							chart.data.datasets[1].data = Object.keys(priorities).sort().reduce(function(acc, key) {acc.push(priorities[key].work_humanities); return acc;}, [])
 							chart.update()

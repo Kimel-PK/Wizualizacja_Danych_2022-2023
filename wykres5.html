@@ -41,6 +41,7 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -49,16 +50,15 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystko</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<p>
-						75% studentów/studentek z Wielkiej Brytanii deklaruje, że zjadłowało się lub aktualnie jest w związku na odległość.
-						Ankietowani wskazują, że główną trudnością w utrzymaniu związku długodystansowego jest brak fizycznej intymności - szok 🤯
+						75% studentów/studentek z Wielkiej Brytanii deklaruje, że znajdowało się lub aktualnie jest w związku na odległość. Ankietowani wskazują, że główną trudnością w utrzymaniu związku długodystansowego jest brak fizycznej intymności - szok 🤯
 						</br></br>
-						Na podstawie danych: RELATIONSHIP STATISTICS 2023: SUCCESS RATES, BREAKUPS & MARRIAGES z portalu EarthWeb
+						Na podstawie danych: "RELATIONSHIP STATISTICS 2023: SUCCESS RATES, BREAKUPS & MARRIAGES" z portalu EarthWeb
 					</p>
 					<hr>
 					<div class="row">
@@ -103,7 +103,7 @@
 						var chart = new Chart(ctx, {
 							type: 'pie',
 							data: {
-								labels: ['W związku tradycyjnym', 'W związku na odległość', 'Nie jest/była w związku'],
+								labels: ['W związku tradycyjnym', 'W związku na odległość', 'Nie znajdują się w związku'],
 								datasets: [{
 									data: [close_humanities + close_science, distant_humanities + distant_science, none_humanities + none_science],
 									backgroundColor: [

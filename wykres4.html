@@ -41,26 +41,27 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
-					<h2 class="chart-title">Kontakty seksualne w podziale na płeć</h2>
+					<h2 class="chart-title">Kontakty seksualne z podziałem na płeć</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<h2 class="chart-title">Kontakty seksualne, a rodzaj ankiety</h2>
+					<h2 class="chart-title">Kontakty seksualne z podziałem na rodzaj ankiety</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
-						<button id="all_2" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science_2">Pokaż tylko studia ścisłe</button>
-						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
+						<button id="all_2" class="active">Wszystko</button>
+						<button id="science_2">Studia ścisłe</button>
+						<button id="humanities_2">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p><!-- TODO jakiś komentarz? --></p>
+					<p><!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -155,24 +156,24 @@
 								if (data[i].ankieta_internetowa == "tak") {
 									sex2.all_online_yes++
 									if (data[i].studia == "humanistyczne")
-										sex2.humanities_online++
+										sex2.humanities_online_yes++
 									else if (data[i].studia == "ścisłe")
-										sex2.science_online++
-								} else {
+										sex2.science_online_yes++
+								} else if (data[i].ankieta_internetowa == "nie") {
 									sex2.all_offline_yes++
 									if (data[i].studia == "humanistyczne")
 										sex2.humanities_offline_yes++
 									else if (data[i].studia == "ścisłe")
 										sex2.science_offline_yes++
 								}
-							} else {
+							} else if (data[i].seks == "nie") {
 								if (data[i].ankieta_internetowa == "tak") {
 									sex2.all_online_no++
 									if (data[i].studia == "humanistyczne")
 										sex2.humanities_online_no++
 									else if (data[i].studia == "ścisłe")
 										sex2.science_online_no++
-								} else {
+								} else if (data[i].ankieta_internetowa == "nie") {
 									sex2.all_offline_no++
 									if (data[i].studia == "humanistyczne")
 										sex2.humanities_offline_no++
@@ -207,6 +208,12 @@
 								}]
 							},
 							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: "Wszyscy studenci"
+									},
+								},
 								scales: {
 									y: {
 										beginAtZero: true,
@@ -266,24 +273,30 @@
 								labels: ["Liczba osób deklarująca, że uprawiała seks", "Liczba osób deklarująca, że nie uprawiała seksu"],
 								datasets: [{
 									label: "Liczba osób, ankiety online",
-									data: [sex2.all_online_yes, sex2.all_online_no],
+									data: [sex2.all_online_yes / (sex2.all_online_yes + sex2.all_online_no), sex2.all_online_no / (sex2.all_online_yes + sex2.all_online_no)],
 									backgroundColor: colors.default,
 									borderColor: colors.default_border,
 									borderWidth: 1
 								},
 								{
 									label: "Liczba osób, ankiety offline",
-									data: [sex2.all_offline_yes, sex2.all_offline_no],
+									data: [sex2.all_offline_yes / (sex2.all_offline_yes + sex2.all_offline_no), sex2.all_offline_no / (sex2.all_offline_yes + sex2.all_offline_no)],
 									backgroundColor: colors.default_contrast,
-									borderColor: colors.devault_contrast_border,
+									borderColor: colors.default_contrast_border,
 									borderWidth: 1
 								}]
 							},
 							options: {
+								plugins: {
+									title: {
+										display: true,
+										text: "Wszyscy studenci"
+									},
+								},
 								scales: {
 									y: {
 										beginAtZero: true,
-										max: 80
+										max: 1
 									}
 								}
 							}
@@ -294,27 +307,27 @@
 							$("#all_2").addClass("active");
 							$("#science_2").removeClass("active");
 							$("#humanities_2").removeClass("active");
-							chart2.options.plugins.title.text = 'Wszystkie ankiety'
-							chart2.data.datasets[0].data = [sex2.all_online_yes, sex2.all_online_no],
-							chart2.data.datasets[1].data = [sex2.all_offline_yes, sex2.all_offline_no],
+							chart2.options.plugins.title.text = 'Wszyscy studenci'
+							chart2.data.datasets[0].data = [sex2.all_online_yes / (sex2.all_online_yes + sex2.all_online_no), sex2.all_online_no / (sex2.all_online_yes + sex2.all_online_no)]
+							chart2.data.datasets[1].data = [sex2.all_offline_yes / (sex2.all_offline_yes + sex2.all_offline_no), sex2.all_offline_no / (sex2.all_offline_yes + sex2.all_offline_no)]
 							chart2.update()
 						}
 						function science_2 () {
 							$("#all_2").removeClass("active");
 							$("#science_2").addClass("active");
 							$("#humanities_2").removeClass("active");
-							chart2.options.plugins.title.text = 'Ankiety papierowe'
-							chart2.data.datasets[0].data = [sex2.science_online_yes, sex2.science_online_no],
-							chart2.data.datasets[1].data = [sex2.science_offline_yes, sex2.science_offline_no],
+							chart2.options.plugins.title.text = 'Studenci kierunków ścisłych'
+							chart2.data.datasets[0].data = [sex2.science_online_yes / (sex2.science_online_yes + sex2.science_online_no), sex2.science_online_no / (sex2.science_online_yes + sex2.science_online_no)]
+							chart2.data.datasets[1].data = [sex2.science_offline_yes / (sex2.science_offline_yes + sex2.science_offline_no), sex2.science_offline_no / (sex2.science_offline_yes + sex2.science_offline_no)]
 							chart2.update()
 						}
 						function humanities_2 () {
 							$("#all_2").removeClass("active");
 							$("#science_2").removeClass("active");
 							$("#humanities_2").addClass("active");
-							chart2.options.plugins.title.text = 'Ankiety online'
-							chart2.data.datasets[0].data = [sex2.humanities_online_yes, sex2.humanities_online_no],
-							chart2.data.datasets[1].data = [sex2.humanities_offline_yes, sex2.humanities_offline_no],
+							chart2.options.plugins.title.text = 'Studenci kierunków humanistycznych'
+							chart2.data.datasets[0].data = [sex2.humanities_online_yes / (sex2.humanities_online_yes + sex2.humanities_online_no), sex2.humanities_online_no / (sex2.humanities_online_yes + sex2.humanities_online_no)]
+							chart2.data.datasets[1].data = [sex2.humanities_offline_yes / (sex2.humanities_offline_yes + sex2.humanities_offline_no), sex2.humanities_offline_no / (sex2.humanities_offline_yes + sex2.humanities_offline_no)]
 							chart2.update()
 						}
 						

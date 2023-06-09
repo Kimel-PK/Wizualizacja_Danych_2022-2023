@@ -41,20 +41,20 @@
 						<li><a href="wykres11.html" class="nav-active">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Wpływ pandemii na związek</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<p>
-						Badanie społeczne Covid-19 przeprowadzone przez Nuffield Foundation i UCL wykazało, że 25% osób z pokolenia Z zgłosiło pogorszenie swoich relacji
-						z partnerem od początku pandemii. Z drugiej strony, 46% zauważyło poprawę jakości swoich związków w tym samym okresie czasu .
+						Badanie społeczne Covid-19 przeprowadzone przez Nuffield Foundation i UCL wykazało, że 25% osób z pokolenia Z zgłosiło pogorszenie swoich relacji z partnerem od początku pandemii. Z drugiej strony, 46% zauważyło poprawę jakości swoich związków w tym samym okresie czasu.
 					</p>
 					<hr>
 					<div class="row">
@@ -135,24 +135,28 @@
 								scales: {
 									y: {
 										beginAtZero: true,
-										max: 1
+										max: 1,
+										title: {
+											display: true,
+											text: "Procent osób"
+										}
 									}
 								}
 							},
 							data: {
 								labels: ["Osoby w związku na odległość", "Osoby w związku nie na odległość"],
 								datasets: [{
-									label: "uważa że polepszyło",
+									label: "Uważa, że polepszyła ich związek",
 									data: [pandemic.distant.yes_all / (pandemic.distant.yes_all + pandemic.distant.no_all), pandemic.close.yes_all / (pandemic.close.yes_all + pandemic.close.no_all)],
-									backgroundColor: colors.positive,
-									borderColor: colors.positive_border,
+									backgroundColor: colors.default,
+									borderColor: colors.default_border,
 									borderWidth: 1
 								},
 								{
-									label: "uważa że nie polepszyło",
+									label: "Uważa, że nie polepszyła ich związku",
 									data: [pandemic.distant.no_all / (pandemic.distant.yes_all + pandemic.distant.no_all), pandemic.close.no_all / (pandemic.close.yes_all + pandemic.close.no_all)],
-									backgroundColor: colors.negative,
-									borderColor: colors.negative_border,
+									backgroundColor: colors.default_contrast,
+									borderColor: colors.default_contrast_border,
 									borderWidth: 1
 								}]
 							}

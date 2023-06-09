@@ -41,6 +41,7 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -49,32 +50,43 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystko</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<h2 class="chart-title">Dążenie do spotkania</h2>
+					<h2 class="chart-title">Najczęściej wykorzystywane aplikacje randkowe?</h2>
+					<!-- TODO wykres polarArea z rodzajami aplikacji randkowych -->
+					<div class="chart-small">
+						<canvas class="chart-js" id="myChart15"></canvas>
+					</div>
+					<div class="actions-bar">
+						<button id="all_15" class="active">Wszystko</button>
+						<button id="science_15">Studia ścisłe</button>
+						<button id="humanities_15">Studia humanistyczne</button>
+					</div>
+					<hr>
+					<h2 class="chart-title">Czy dążysz do spotkania ze sparowanymi osobami?</h2>
 					<div class="chart-small">
 						<canvas class="chart-js" id="myChart2"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all_2" class="active">Pokaż wszystko</button>
-						<button id="science_2">Pokaż tylko studia ścisłe</button>
-						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
+						<button id="all_2" class="active">Wszystko</button>
+						<button id="science_2">Studia ścisłe</button>
+						<button id="humanities_2">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<h2 class="chart-title">Dzwoni przed randką</h2>
+					<h2 class="chart-title">Czy zdzwaniasz się z osobą przed spotkaniem?</h2>
 					<div class="chart-small">
 						<canvas class="chart-js" id="myChart3"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all_3" class="active">Pokaż wszystko</button>
-						<button id="science_3">Pokaż tylko studia ścisłe</button>
-						<button id="humanities_3">Pokaż tylko studia humanistyczne</button>
+						<button id="all_3" class="active">Wszystko</button>
+						<button id="science_3">Studia ścisłe</button>
+						<button id="humanities_3">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -264,7 +276,6 @@
 						// wykres 3
 						
 						// tworzenie wykresu
-						// TODO do napisania po polskiemu
 						var chart3 = new Chart(document.getElementById('myChart3').getContext('2d'), {
 							type: 'pie',
 							options: {
@@ -276,7 +287,7 @@
 								}
 							},
 							data: {
-								labels: ['Procent osób dzwoniących przed randką', 'Procent osób nie dzwoniących'],
+								labels: ['Procent osób dzwoniących przed randką', 'Procent osób nie dzwoniących przed randką'],
 								datasets: [{
 									data: [(call_before.humanities + call_before.science) / (call_before.all_humanities + call_before.all_science) * 100, (call_before.all_humanities + call_before.all_science - call_before.humanities - call_before.science) / (call_before.all_humanities + call_before.all_science) * 100],
 									backgroundColor: [
@@ -288,7 +299,6 @@
 						});
 						
 						// funkcje przycisków akcji
-						// FIXME coś się tutaj dziwnie zachowuje
 						function all_3 () {
 							$("#all_3").addClass("active");
 							$("#science_3").removeClass("active");

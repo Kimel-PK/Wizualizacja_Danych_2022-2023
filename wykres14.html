@@ -41,18 +41,19 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Czy wyobrażasz siebie w związku z osobą tej samej płci?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -176,13 +177,15 @@
 									label: "Procent mężczyzn",
 									data: [count.all.men_yes / (count.all.men_yes + count.all.men_no), count.all.men_no / (count.all.men_yes + count.all.men_no)],
 									backgroundColor: '#0000ff33',
-									borderColor: '#0000ffff'
+									borderColor: '#0000ffff',
+									borderWidth: 1
 								},
 								{
 									label: "Procent kobiet",
 									data: [count.all.women_yes / (count.all.women_yes + count.all.women_no), count.all.women_no / (count.all.women_yes + count.all.women_no)],
 									backgroundColor: '#ffc0cb86',
-									borderColor: '#ffc0cbff'
+									borderColor: '#ffc0cbff',
+									borderWidth: 1
 								}]
 							}
 						});

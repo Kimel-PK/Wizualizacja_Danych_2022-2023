@@ -41,18 +41,19 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Seks bez zobowiązań</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -137,7 +138,7 @@
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'bar',
 							data: {
-								labels: ["Liczba osób deklarująca, że uprawiała seks", "Liczba osób deklarująca, że nie uprawiała seksu"],
+								labels: ["Liczba osób deklarująca, że uprawiała seks bez zobowiązań", "Liczba osób deklarująca, że nie uprawiała seksu bez zobowiązań"],
 								datasets: [{
 									label: "Liczba mężczyzn",
 									data: [sex_without_obligation.all_man_yes / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no), sex_without_obligation.all_man_no / (sex_without_obligation.all_man_yes + sex_without_obligation.all_man_no)],
@@ -183,7 +184,7 @@
 							$("#all").removeClass("active");
 							$("#science").addClass("active");
 							$("#humanities").removeClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = [sex_without_obligation.science_man_yes / (sex_without_obligation.science_man_yes + sex_without_obligation.science_man_no), sex_without_obligation.science_man_no / (sex_without_obligation.science_man_yes + sex_without_obligation.science_man_no)]
 							chart.data.datasets[1].data = [sex_without_obligation.science_woman_yes / (sex_without_obligation.science_woman_yes + sex_without_obligation.science_woman_no), sex_without_obligation.science_woman_no / (sex_without_obligation.science_woman_yes + sex_without_obligation.science_woman_no)]
 							chart.update()
@@ -192,7 +193,7 @@
 							$("#all").removeClass("active");
 							$("#science").removeClass("active");
 							$("#humanities").addClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = [sex_without_obligation.humanities_man_yes / (sex_without_obligation.humanities_man_yes + sex_without_obligation.humanities_man_no), sex_without_obligation.humanities_man_no / (sex_without_obligation.humanities_man_yes + sex_without_obligation.humanities_man_no)]
 							chart.data.datasets[1].data = [sex_without_obligation.humanities_woman_yes / (sex_without_obligation.humanities_woman_yes + sex_without_obligation.humanities_woman_no), sex_without_obligation.humanities_woman_no / (sex_without_obligation.humanities_woman_yes + sex_without_obligation.humanities_woman_no)]
 							chart.update()

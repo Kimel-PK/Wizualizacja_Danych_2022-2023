@@ -41,18 +41,19 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Czy szukasz stałego związku?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -203,7 +204,7 @@
 							$("#all").removeClass("active");
 							$("#science").addClass("active");
 							$("#humanities").removeClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = [long_term.science.men_yes / (long_term.science.men_yes + long_term.science.men_no), long_term.science.men_no / (long_term.science.men_yes + long_term.science.men_no)]
 							chart.data.datasets[1].data = [long_term.science.women_yes / (long_term.science.women_yes + long_term.science.women_no), long_term.science.women_no / (long_term.science.women_yes + long_term.science.women_no)]
 							chart.update()
@@ -212,7 +213,7 @@
 							$("#all").removeClass("active");
 							$("#science").removeClass("active");
 							$("#humanities").addClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = [long_term.humanities.men_yes / (long_term.humanities.men_yes + long_term.humanities.men_no), long_term.humanities.men_no / (long_term.humanities.men_yes + long_term.humanities.men_no)]
 							chart.data.datasets[1].data = [long_term.humanities.women_yes / (long_term.humanities.women_yes + long_term.humanities.women_no), long_term.humanities.women_no / (long_term.humanities.women_yes + long_term.humanities.women_no)]
 							chart.update()

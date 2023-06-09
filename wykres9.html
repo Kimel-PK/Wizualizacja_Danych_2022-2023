@@ -41,24 +41,22 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
 					<h2 class="chart-title">Sexting</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<p>
-						40% studentów z Wielkiej Brytanii zaangażowało się kiedyś w sexting. 
-						Wielu z nich najprawdopodobniej wysyłało nagie lub półnagie zdjęcia do innej osoby - tak stwierdziło 37% respondentów.
-						Mniejsze odsetki miały stosunki seksualne za pośrednictwem oprogramowania wideo (16%) lub telefonu (12%).
+						40% studentów z Wielkiej Brytanii zaangażowało się kiedyś w sexting. Wielu z nich najprawdopodobniej wysyłało nagie lub półnagie zdjęcia do innej osoby - tak stwierdziło 37% respondentów. Mniejsze odsetki miały stosunki seksualne za pośrednictwem oprogramowania wideo (16%) lub telefonu (12%).
 						</br></br>
-						Dane zaprezentowane na podstawie raportu: Sex and Relationships Among
-						Students: Summary Report - 2021 przeprowadzonego przez hepi.
+						Dane zaprezentowane na podstawie raportu: "Sex and Relationships Among Students: Summary Report - 2021" przeprowadzonego przez hepi.
 					</p>
 					<hr>
 					<div class="row">
@@ -158,7 +156,7 @@
 								}
 							},
 							data: {
-								labels: ["Liczba osób deklarująca podejmowanie sextingu", "Liczba osób deklarująca, niepodejmowanie sextingu"],
+								labels: ["Liczba osób deklarująca podejmowanie sextingu", "Liczba osób deklarująca niepodejmowanie sextingu"],
 								datasets: [{
 									label: "Liczba mężczyzn",
 									data: [sexting.all_man_yes / (sexting.all_man_yes + sexting.all_man_no), sexting.all_man_no / (sexting.all_man_yes + sexting.all_man_no)],

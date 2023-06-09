@@ -41,26 +41,27 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
-					<h2 class="chart-title">Kogo szukają?</h2>
+					<h2 class="chart-title">Jakiej relacji szukają użytkownicy?</h2>
 					<canvas class="chart-js" id="myChart"></canvas>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystko</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<h2 class="chart-title">Jak często korzystają?</h2>
+					<h2 class="chart-title">Jak często korzystają z aplikacji?</h2>
 					<canvas class="chart-js" id="myChart2"></canvas>
 					<div class="actions-bar">
-						<button id="all_2" class="active">Pokaż wszystko</button>
-						<button id="science_2">Pokaż tylko studia ścisłe</button>
-						<button id="humanities_2">Pokaż tylko studia humanistyczne</button>
+						<button id="all_2" class="active">Wszystko</button>
+						<button id="science_2">Studia ścisłe</button>
+						<button id="humanities_2">Studia humanistyczne</button>
 					</div>
 					<hr>
-					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO --></p>
+					<p>Wstawić tu jakieś cytaty z tej stronki z danymi z Anglii <!-- TODO cytat --></p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -143,6 +144,11 @@
 										display: true,
 										text: 'Wszyscy studenci'
 									}
+								},
+								scales: {
+									y: {
+										max: 20
+									}
 								}
 							},
 							data: {
@@ -170,7 +176,7 @@
 							$("#all").removeClass("active");
 							$("#science").addClass("active");
 							$("#humanities").removeClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart.data.datasets[0].data = Object.keys(goal).reduce(function(acc, key) {acc.push(goal[key].science); return acc;}, []),
 							chart.update()
 						}
@@ -178,7 +184,7 @@
 							$("#all").removeClass("active");
 							$("#science").removeClass("active");
 							$("#humanities").addClass("active");
-							chart.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart.data.datasets[0].data = Object.keys(goal).reduce(function(acc, key) {acc.push(goal[key].humanities); return acc;}, [])
 							chart.update()
 						}
@@ -198,6 +204,11 @@
 									title: {
 										display: true,
 										text: 'Wszyscy studenci'
+									}
+								},
+								scales: {
+									y: {
+										max: 12
 									}
 								}
 							},
@@ -226,7 +237,7 @@
 							$("#all_2").removeClass("active");
 							$("#science_2").addClass("active");
 							$("#humanities_2").removeClass("active");
-							chart2.options.plugins.title.text = 'Wszyscy kierunków ścisłych'
+							chart2.options.plugins.title.text = 'Studenci kierunków ścisłych'
 							chart2.data.datasets[0].data = Object.keys(how_often).reduce(function(acc, key) {acc.push(how_often[key].science); return acc;}, []),
 							chart2.update()
 						}
@@ -234,7 +245,7 @@
 							$("#all_2").removeClass("active");
 							$("#science_2").removeClass("active");
 							$("#humanities_2").addClass("active");
-							chart2.options.plugins.title.text = 'Wszyscy kierunków humanistycznych'
+							chart2.options.plugins.title.text = 'Studenci kierunków humanistycznych'
 							chart2.data.datasets[0].data = Object.keys(how_often).reduce(function(acc, key) {acc.push(how_often[key].humanities); return acc;}, [])
 							chart2.update()
 						}

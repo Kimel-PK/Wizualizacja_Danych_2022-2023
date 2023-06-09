@@ -41,6 +41,7 @@
 						<li><a href="wykres11.html">Wpływ pandemii na związki</a></li>
 						<li><a href="wykres3.html">Najczęstsze powody rozstania</a></li>
 						<li><a href="wykres10.html" class="nav-active">Czy warto szukać partnera?</a></li>
+						<li><a href="outro.html">Podsumowanie</a></li>
 					</ul>
 				</aside>
 				<main class="col-10">
@@ -49,14 +50,13 @@
 						<canvas class="chart-js" id="myChart"></canvas>
 					</div>
 					<div class="actions-bar">
-						<button id="all" class="active">Pokaż wszystkie kierunki studiów</button>
-						<button id="science">Pokaż tylko studia ścisłe</button>
-						<button id="humanities">Pokaż tylko studia humanistyczne</button>
+						<button id="all" class="active">Wszystko</button>
+						<button id="science">Studia ścisłe</button>
+						<button id="humanities">Studia humanistyczne</button>
 					</div>
 					<hr>
 					<p>
-					   Według raportu "Dating & Relationships" przeprowadzonego przez YPulse  większość singli z pokolenia Z i Millenialsów twierdzi, że 
-					   randkowanie w dzisiejszych czasach jest trudniejsze niż w poprzednich pokoleniach, a 59% z nich uważa, że nie jest w ogóle tego warte.</p>
+					   Według raportu "Dating & Relationships" przeprowadzonego przez YPulse większość singli z pokolenia Z i Millenialsów twierdzi, że randkowanie w dzisiejszych czasach jest trudniejsze niż w poprzednich pokoleniach, a 59% z nich uważa, że nie jest w ogóle tego warte.</p>
 					<hr>
 					<div class="row">
 						<div class="col-6">
@@ -148,7 +148,7 @@
 						console.log (relationship)
 						
 						// tworzenie wykresu
-						// TODO do przemyślenia jak go pokolorować
+						// FIXME nic tutaj nie działa jak trzeba
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'pie',
 							options: {
@@ -224,11 +224,11 @@
 									data: [relationship.present.all_want_marriage, relationship.present.all_not_want_marriage, relationship.past.all_search, relationship.past.all_not_search, relationship.none.all_worth, relationship.none.all_not_worth],
 									backgroundColor: [
 										'rgba(255, 0, 0, 0.8)',
-										'rgba(255, 0, 0, 0.8)',
+										'rgba(155, 0, 0, 0.8)',
 										'rgba(0, 255, 0, 0.8)',
-										'rgba(0, 255, 0, 0.8)',
+										'rgba(0, 155, 0, 0.8)',
 										'rgba(0, 0, 255, 0.8)',
-										'rgba(0, 0, 255, 0.8)'
+										'rgba(0, 0, 155, 0.8)'
 									],
 								}]
 							}
