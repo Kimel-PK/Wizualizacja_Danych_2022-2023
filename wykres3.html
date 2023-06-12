@@ -92,7 +92,7 @@
 										}
 									}
 								}
-							} else {
+							} else if (data[i].zw_odległość == "nie") {
 								for (let j = 0; j < reasons.length; j++) {
 									if (reasons[j] in break_up_dictionary) {
 										break_up_dictionary[reasons[j]].all++
@@ -137,6 +137,9 @@
 										display: true,
 										text: "Wszystkie związki"
 									}
+								},
+								scale: {
+									max: 25
 								}
 							},
 						});

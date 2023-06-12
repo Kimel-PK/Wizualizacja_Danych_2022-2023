@@ -148,7 +148,6 @@
 						console.log (relationship)
 						
 						// tworzenie wykresu
-						// FIXME nic tutaj nie działa jak trzeba
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'pie',
 							options: {
@@ -160,42 +159,44 @@
 									legend: {
 										labels: {
 											generateLabels: function(chart) {
-												// Get the default label list
 												const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
 												const labelsOriginal = original.call(this, chart);
 
-												// Build an array of colors used in the datasets of the chart
 												let datasetColors = chart.data.datasets.map(function(e) {
 													return e.backgroundColor;
 												});
 												datasetColors = datasetColors.flat();
 												
-												// Modify the color and hide state of each label
+												let i = 0
 												labelsOriginal.forEach(label => {
-													// FIXME podzielić to tak żeby uznawało pierwsze 3 labele za grupę a potem następne 6 za drugą grupe
-													// There are twice as many labels as there are datasets. This converts the label index into the corresponding dataset index
-													label.datasetIndex = (label.index - label.index % 2) / 2;
+													
+													if (i < 3)
+														label.datasetIndex = 0
+													else
+														label.datasetIndex = 1
 
-													// The hidden state must match the dataset's hidden state
-													label.hidden = !chart.isDatasetVisible(label.datasetIndex);
-
-													// Change the color to match the dataset
-													label.fillStyle = datasetColors[label.index];
+													label.hidden = !chart.isDatasetVisible(label.datasetIndex)
+													label.fillStyle = datasetColors[label.index]
+													i++
 												});
 
 												return labelsOriginal;
 											}
 										},
 										onClick: function(mouseEvent, legendItem, legend) {
-											// toggle the visibility of the dataset from what it currently is
-											legend.chart.getDatasetMeta(legendItem.datasetIndex).hidden = legend.chart.isDatasetVisible(legendItem.datasetIndex);
+											// legend.chart.getDatasetMeta(legendItem.datasetIndex).hidden = legend.chart.isDatasetVisible(legendItem.datasetIndex);
 											legend.chart.update();
 										}
 									},
 									tooltip: {
 										callbacks: {
 											label: function(context) {
-												const labelIndex = (context.datasetIndex * 2) + context.dataIndex;
+												let labelIndex = 0
+												if (context.datasetIndex == 0) {
+													labelIndex = context.dataIndex
+												} else if (context.datasetIndex == 1) {
+													labelIndex = context.dataIndex + 3
+												}
 												return context.chart.data.labels[labelIndex] + ': ' + context.formattedValue;
 											}
 										}
@@ -214,21 +215,21 @@
 									label: "Liczba osób",
 									data: [relationship.present.all_want_marriage + relationship.present.all_not_want_marriage, relationship.past.all_search + relationship.past.all_not_search, relationship.none.all_worth + relationship.none.all_not_worth],
 									backgroundColor: [
-										'rgba(255, 0, 0, 0.4)',
-										'rgba(0, 255, 0, 0.4)',
-										'rgba(0, 0, 255, 0.4)'
+										'rgba(255, 99, 132, 0.4)',
+										'rgba(255, 205, 86, 0.4)',
+										'rgba(75, 192, 192, 0.4)'
 									],
 								},
 								{
 									label: "Liczba osób",
 									data: [relationship.present.all_want_marriage, relationship.present.all_not_want_marriage, relationship.past.all_search, relationship.past.all_not_search, relationship.none.all_worth, relationship.none.all_not_worth],
 									backgroundColor: [
-										'rgba(255, 0, 0, 0.8)',
-										'rgba(155, 0, 0, 0.8)',
-										'rgba(0, 255, 0, 0.8)',
-										'rgba(0, 155, 0, 0.8)',
-										'rgba(0, 0, 255, 0.8)',
-										'rgba(0, 0, 155, 0.8)'
+										'rgba(255, 99, 132, 0.8)',
+										'rgba(255, 99, 132, 0.3)',
+										'rgba(255, 205, 86, 0.8)',
+										'rgba(255, 205, 86, 0.3)',
+										'rgba(75, 192, 192, 0.8)',
+										'rgba(75, 192, 192, 0.3)'
 									],
 								}]
 							}

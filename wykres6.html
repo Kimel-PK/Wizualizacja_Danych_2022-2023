@@ -56,14 +56,13 @@
 					</div>
 					<hr>
 					<h2 class="chart-title">Najczęściej wykorzystywane aplikacje randkowe?</h2>
-					<!-- TODO wykres polarArea z rodzajami aplikacji randkowych -->
 					<div class="chart-small">
 						<canvas class="chart-js" id="myChart15"></canvas>
 					</div>
 					<div class="actions-bar">
 						<button id="all_15" class="active">Wszystko</button>
-						<button id="science_15">Studia ścisłe</button>
-						<button id="humanities_15">Studia humanistyczne</button>
+						<button id="distant_15">Związki na odległość</button>
+						<button id="close_15">Związki nie na odległość</button>
 					</div>
 					<hr>
 					<h2 class="chart-title">Czy dążysz do spotkania ze sparowanymi osobami?</h2>
@@ -109,6 +108,9 @@
 						let science_count = 0
 						
 						// wykres 2
+						let dating_apps = {}
+						
+						// wykres 2
 						let want_meet = {
 							all_science: 0,
 							all_humanities: 0,
@@ -125,6 +127,30 @@
 						}
 						
 						for (let i = 0; i < data.length; i++) {
+							
+							data[i].platforma.split(", ").forEach(platform => {
+								if (platform == "")
+									return
+								
+								if (dating_apps[platform] == undefined) {
+									dating_apps[platform] = {
+										all: 0,
+										distant: 0,
+										close: 0
+									}
+								}
+								
+								if (data[i].zw_odległość == "tak") {
+									dating_apps[platform].all++
+									dating_apps[platform].distant++
+								} else if (data[i].zw_odległość == "nie") {
+									dating_apps[platform].all++
+									dating_apps[platform].close++
+								} else {
+									dating_apps[platform].all++
+								}
+							})
+							
 							if (data[i].studia == "humanistyczne") {
 								humanities_count++
 								
@@ -163,6 +189,7 @@
 							}
 						}
 						
+						// wykres 1
 						// tworzenie wykresu
 						var chart = new Chart(document.getElementById('myChart').getContext('2d'), {
 							type: 'pie',
@@ -216,6 +243,78 @@
 						document.getElementById("all").addEventListener("click", all);
 						document.getElementById("science").addEventListener("click", science);
 						document.getElementById("humanities").addEventListener("click", humanities);
+						
+						// wykres 1.5
+						
+						console.log (dating_apps)
+						
+						// tworzenie wykresu
+						var chart = new Chart(document.getElementById('myChart15').getContext('2d'), {
+							type: 'polarArea',
+							data: {
+								labels: Object.keys(dating_apps),
+								datasets: [{
+									data: Object.values(dating_apps).map(a => a.all),
+									backgroundColor: [
+										'rgba(255, 99, 132, 0.4)',
+										'rgba(75, 192, 192, 0.4)',
+										'rgba(255, 205, 86, 0.4)',
+										'rgba(201, 203, 207, 0.4)',
+										'rgba(54, 162, 235, 0.4)',
+										'rgba(174, 162, 235, 0.4)',
+										'rgba(174, 162, 35, 0.4)',
+										'rgba(74, 62, 235, 0.4)',
+										'rgba(20, 190, 98, 0.4)'
+									]}
+								]
+							},
+							options: {
+								responsive: true,
+								plugins: {
+									legend: {
+										position: 'top',
+									},
+									title: {
+										display: true,
+										text: "Aplikacje randkowe"
+									}
+								},
+								scale: {
+									max: 16
+								}
+							},
+						});
+						
+						// funkcje przycisków akcji
+						function all_15 () {
+							$("#all").addClass("active");
+							$("#distant").removeClass("active");
+							$("#close").removeClass("active");
+							chart.options.plugins.title.text = "Wszystkie związki"
+							chart.data.datasets[0].data = Object.values(dating_apps).map(a => a.all)
+							chart.update()
+						}
+						function distant_15 () {
+							$("#all").removeClass("active");
+							$("#distant").addClass("active");
+							$("#close").removeClass("active");
+							chart.options.plugins.title.text = "Związki na odległość"
+							chart.data.datasets[0].data = Object.values(dating_apps).map(a => a.distant)
+							chart.update()
+						}
+						function close_15 () {
+							$("#all").removeClass("active");
+							$("#distant").removeClass("active");
+							$("#close").addClass("active");
+							chart.options.plugins.title.text = "Związki nie na odległość"
+							chart.data.datasets[0].data = Object.values(dating_apps).map(a => a.close)
+							chart.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("all_15").addEventListener("click", all_15);
+						document.getElementById("distant_15").addEventListener("click", distant_15);
+						document.getElementById("close_15").addEventListener("click", close_15);
 						
 						// wykres 2
 						
