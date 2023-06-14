@@ -8,6 +8,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js" integrity="sha512-L6yov5P1r9QnZX2ZRiq+XBLsm1GQ38zfSDJ6gy3pKmPCqkWvK2nz8Ojlju9q36+zOsMmMB+hYgGrJtJWo4Gy/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.js" integrity="sha512-CMF3tQtjOoOJoOKlsS7/2loJlkyctwzSoDK/S40iAB+MqWSaf50uObGQSk5Ny/gfRhRCjNLvoxuCvdnERU4WGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/helpers.js" integrity="sha512-BQJ3AP+pvkpSDEexjv6OYwGVCVIFo507d09S8pFPTp63+d7YZDrvjoB+4cSPTThQVfQjP6yybIZ6P29ZQGcPvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="utils.js"></script>
 		<!-- jQuery -->
 		<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 	</head>
@@ -50,6 +51,57 @@
 					<h3>Użyte technologie</h3>
 					<h4>Papier na ankiety</h4>
 					<h4>Chart.js</h4>
+					<div class="row">
+						<img class="chart-js-thumbnail" src="https://www.chartjs.org/img/chartjs-logo.svg">
+						<p class="chart-js-title">Chart.js</p>
+						<a class="text-center" href="https://www.chartjs.org/">Link do strony biblioteki</a>
+					</div>
+					<h5>Dlaczego Chart.js?</h5>
+					<p>Wśród wielu bibliotek do tworzenia wykresów dla programistów aplikacji JavaScript, obecnie najpopularniejszą jest <mark>Chart.js</mark>, co potwierdzają gwiazdki na GitHubie (~60 000) oraz liczba pobrań z narzędzia npm (~2 400 000 tygodniowo).</p>
+					<p>Chart.js został stworzony i ogłoszony w 2013 roku, ale od tamtego czasu przeszedł długą drogę. Jest projektem open-source, licencjonowanym na bardzo liberalnej licencji MIT, i jest utrzymywany przez aktywną społeczność.</p>
+					<h5>Możliwości</h5>
+					<p>Chart.js dostarcza zestaw często używanych rodzajów wykresów, wtyczek i opcji dostosowywania. Oprócz zestawu wbudowanych rodzajów wykresów, można również używać dodatkowych rodzajów wykresów utrzymywanych przez społeczność. Dodatkowo, istnieje możliwość łączenia kilku rodzajów wykresów w wykres mieszany (czyli łączenie wielu rodzajów wykresów na jednym płótnie).</p>
+					<p>Chart.js jest bardzo elastyczny dzięki własnym wtyczkom, które umożliwiają tworzenie adnotacji, funkcji przybliżania lub przeciągania i upuszczania, aby wymienić tylko kilka możliwości.</p>
+					<h5 class="margin-bottom">Przykładowe wykresy wygenerowane z użyciem Chart.js</h5>
+					<div class="row">
+						<div class="col-6">
+							<canvas id="chart1" class="chart-js"></canvas>
+							<div class="actions-bar">
+								<button id="randomize1">Losuj dane</button>
+							</div>
+						</div>
+						<div class="col-6">
+							<canvas id="chart2" class="chart-js"></canvas>
+							<div class="actions-bar">
+								<button id="randomize2">Losuj dane</button>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-3"></div>
+						<div class="col-6">
+							<canvas id="chart3" class="chart-js"></canvas>
+							<div class="actions-bar">
+								<button id="randomize3">Losuj dane</button>
+							</div>
+						</div>
+						<div class="col-3"></div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-12 text-center">
+							<a href="https://www.chartjs.org/docs/latest/samples/information.html">Zobacz więcej przykładowych wykresów</a>
+						</div>
+					</div>
+					<h5>Integracje</h5>
+					<p>Chart.js jest zintegrowany z popularnymi frameworkami JavaScript, takimi jak React, Vue, Svelte i Angular. Można go używać bezpośrednio lub korzystać z dobrze utrzymywanych pakietów opakowujących, które umożliwiają bardziej naturalną integrację z preferowanymi frameworkami.</p>
+					<h5>Doświadczenie developerów</h5>
+					<p>Chart.js posiada bardzo szczegółową dokumentację, referencję API oraz przykłady. Utrzymujący projekt oraz członkowie społeczności chętnie angażują się w dyskusje na Slacku, GitHubie oraz Stack Overflow, gdzie ponad 11 000 pytań jest oznaczonych tagiem chart.js.</p>
+					<h5>Wydajność</h5>
+					<p>Chart.js doskonale sprawdza się przy dużych zbiorach danych. Takie zbiory danych mogą być skutecznie przetwarzane przy użyciu wewnętrznego formatu, co pozwala pominąć parsowanie i normalizację danych. Alternatywnie, można skonfigurować dekamację danych, która próbkuje zbiór danych i zmniejsza jego rozmiar przed renderowaniem.</p>
+					<h5>Społeczność</h5>
+					<p>Chart.js jest aktywnie rozwijany i utrzymywany przez społeczność. Ma regularne wydania drobne, odbywające się co około dwa miesiące, oraz wydania główne z istotnymi zmianami co kilka lat. Dzięki temu Chart.js utrzymuje równowagę między dodawaniem nowych funkcji a zachowaniem łatwości ich używania.</p>
 					<hr>
 					<div class="row">
 						<div class="col-6"></div>
@@ -57,6 +109,173 @@
 							<a class="button" href="wykres0.html">Start!</a>
 						</div>
 					</div>
+					<script>
+						
+						// wykres 1
+						var chart1 = new Chart(document.getElementById('chart1').getContext('2d'), {
+							type: 'bar',
+							data: {
+								labels: months({count: 7}),
+								datasets: [{
+									label: 'Fully Rounded',
+									data: numbers({count: 7, min: -100, max: 100}),
+									borderColor: CHART_COLORS.red,
+									backgroundColor: CHART_COLORS_A.red,
+									borderWidth: 2,
+									borderRadius: Number.MAX_VALUE,
+									borderSkipped: false,
+								},
+								{
+									label: 'Small Radius',
+									data: numbers({count: 7, min: -100, max: 100}),
+									borderColor: CHART_COLORS.blue,
+									backgroundColor: CHART_COLORS_A.blue,
+									borderWidth: 2,
+									borderRadius: 5,
+									borderSkipped: false,
+								}]
+							}
+						})
+						
+						// wykres 2
+						var chart2 = new Chart(document.getElementById('chart2').getContext('2d'), {
+							type: 'bar',
+							data: {
+								labels: months({count: 7}),
+								datasets: [{
+									label: 'Dataset 1',
+									data: numbers({count: 7, min: -100, max: 100}),
+									borderColor: CHART_COLORS.red,
+									backgroundColor: CHART_COLORS_A.red,
+									order: 1
+								},
+								{
+									label: 'Dataset 2',
+									data: numbers({count: 7, min: -100, max: 100}),
+									borderColor: CHART_COLORS.blue,
+									backgroundColor: CHART_COLORS_A.blue,
+									type: 'line',
+									order: 0
+								}]
+							}
+						})
+						
+						// wykres 3
+						const inputs = {
+							min: 8,
+							max: 16,
+							count: 8,
+							decimals: 2,
+							continuity: 1
+						}
+						
+						const generateLabels = () => {
+							return months({count: inputs.count});
+						}
+						
+						const generateData = () => {
+							const values = numbers(inputs);
+							inputs.from = values;
+							return values;
+						}
+						
+						var chart3 = new Chart(document.getElementById('chart3').getContext('2d'), {
+							type: 'radar',
+							data: {
+								labels: generateLabels(),
+								datasets: [{
+										label: 'D0',
+										data: generateData(),
+										borderColor: CHART_COLORS.red,
+										backgroundColor: CHART_COLORS_A.red,
+									},
+									{
+										label: 'D1',
+										data: generateData(),
+										borderColor: CHART_COLORS.orange,
+										backgroundColor: CHART_COLORS_A.orange,
+										fill: '-1'
+									},
+									{
+										label: 'D2',
+										data: generateData(),
+										borderColor: CHART_COLORS.yellow,
+										backgroundColor: CHART_COLORS_A.yellow,
+										fill: 1
+									},
+									{
+										label: 'D3',
+										data: generateData(),
+										borderColor: CHART_COLORS.green,
+										backgroundColor: CHART_COLORS_A.green,
+										fill: false
+									},
+									{
+										label: 'D4',
+										data: generateData(),
+										borderColor: CHART_COLORS.blue,
+										backgroundColor: CHART_COLORS_A.blue,
+										fill: '-1'
+									},
+									{
+										label: 'D5',
+										data: generateData(),
+										borderColor: CHART_COLORS.purple,
+										backgroundColor: CHART_COLORS_A.purple,
+										fill: '-1'
+									},
+									{
+										label: 'D6',
+										data: generateData(),
+										borderColor: CHART_COLORS.grey,
+										backgroundColor: CHART_COLORS_A.grey,
+										fill: {value: 85}
+									}
+								]
+							},
+							options: {
+								plugins: {
+									filler: {
+										propagate: false
+									},
+									'samples-filler-analyser': {
+										target: 'chart-analyser'
+									}
+								},
+								interaction: {
+									intersect: false
+								}
+							}
+						})
+						
+						// funkcje przycisków akcji
+						function randomize1 () {
+							chart1.data.datasets.forEach(dataset => {
+								dataset.data = numbers({count: chart1.data.labels.length, min: -100, max: 100});
+							});
+							chart1.update()
+						}
+						
+						function randomize2 () {
+							chart2.data.datasets.forEach(dataset => {
+								dataset.data = numbers({count: chart2.data.labels.length, min: -100, max: 100});
+							});
+							chart2.update()
+						}
+						
+						function randomize3 () {
+							inputs.from = []
+							chart3.data.datasets.forEach(dataset => {
+								dataset.data = generateData();
+							});
+							chart3.update()
+						}
+						
+						// eventListener do każdego przycisku
+						document.getElementById("randomize1").addEventListener("click", randomize1);
+						document.getElementById("randomize2").addEventListener("click", randomize2);
+						document.getElementById("randomize3").addEventListener("click", randomize3);
+					</script>
 				</main>
 			</div>
 		</div>

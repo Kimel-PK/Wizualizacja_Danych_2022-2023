@@ -40,6 +40,10 @@ a.button:hover {
 	text-align: right;
 }
 
+.margin-bottom {
+	margin-bottom: 2em;
+}
+
 /* header */
 
 header {
@@ -99,6 +103,17 @@ aside a:hover {
 main {
 	background-color: var(--background-color);
 	padding: 50px !important;
+}
+
+.chart-js-thumbnail {
+	text-align: center;
+	height: 200px;
+}
+
+.chart-js-title {
+	text-align: center;
+	color: #FF6384;
+	font-size: 44px;
 }
 
 canvas.chart-js {
