@@ -190,6 +190,15 @@
 									},
 									tooltip: {
 										callbacks: {
+											title: function (context) {
+												let labelIndex = 0
+												if (context[0].datasetIndex == 0) {
+													labelIndex = context[0].dataIndex
+												} else if (context[0].datasetIndex == 1) {
+													labelIndex = context[0].dataIndex + 3
+												}
+												return context[0].chart.data.labels[labelIndex]
+											},
 											label: function(context) {
 												let labelIndex = 0
 												if (context.datasetIndex == 0) {
@@ -197,7 +206,7 @@
 												} else if (context.datasetIndex == 1) {
 													labelIndex = context.dataIndex + 3
 												}
-												return context.chart.data.labels[labelIndex] + ': ' + context.formattedValue;
+												return context.chart.data.labels[labelIndex] + ': ' + context.formattedValue
 											}
 										}
 									}
